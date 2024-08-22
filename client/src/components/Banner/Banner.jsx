@@ -3,7 +3,7 @@ import banner from "../../assets/images/banner.JPG";
 
 const Banner = () => {
   return (
-    <div className="w-full">
+    <div className="w-full xs:mt-8 sm:mt-0">
       <img src={banner} alt="banner" className="w-full" />
     </div>
   );

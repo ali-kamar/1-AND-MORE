@@ -5,9 +5,9 @@ const About = () => {
   return (
     <div class="container mb-24">
       <h2 className="text-5xl text-center pb-24">About Us</h2>
-      <div className="flex justify-between">
+      <div className="flex justify-between xs:flex-col md:flex-row">
         <div className=" bg-primary rounded p-5 flex items-center">
-          <p className="max-w-lg text-xl text-white">
+          <p className="max-w-lg xs:text-sm md:text-l lg:text-17 xl:text-xl text-white">
             Welcome to <span>1$ AND MORE</span>, where quality meets
             convenience! We are dedicated to providing a diverse selection of
             products that cater to your everyday needs. From cutting-edge
@@ -20,7 +20,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="w-500 h-full">
+        <div className="md:w-500 h-full xs:w-full">
           <img src={about} alt="" className="w-full h-full" />
         </div>
       </div>

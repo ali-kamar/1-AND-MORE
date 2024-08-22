@@ -7,27 +7,27 @@ const Navbar = () => {
         <div className="flex items-center justify-between flex-grow md:pl-12 py-5">
           <div className="flex items-center space-x-6 capitalize">
             <a
-              href="index.html"
+              href="/"
               className="text-gray-200 hover:text-white transition"
             >
               Home
             </a>
             <a
-              href="pages/shop.html"
+              href="/shop"
               className="text-gray-200 hover:text-white transition"
             >
               Shop
             </a>
 
-            <a href="#" className="text-gray-200 hover:text-white transition">
-              About us
+            <a href="/about" className="text-gray-200 hover:text-white transition">
+              About
             </a>
           </div>
           <a
-            href="pages/login.html"
+            href="/contact"
             className="text-gray-200 hover:text-white transition"
           >
-            Contact Us
+            Contact
           </a>
         </div>
       </div>
