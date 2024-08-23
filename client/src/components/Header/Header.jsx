@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header className="py-4 shadow-sm bg-white mb-6">
       <div className=" flex items-center justify-between px-8">
-        <a href="index.html">
+        <a href="/">
           <img src={logo} alt="Logo" className="xs:w-28 sm:w-32 rounded-full" />
         </a>
         <p className="text-xl xs:invisible md:visible">1 $ AND MORE</p>
@@ -24,7 +24,7 @@ const Header = () => {
             </div>
           </a>
           <a
-            href="/account"
+            href="/register"
             className="text-center hover:text-primary transition relative"
           >
             <div className="xs:text-2xl md:text-4xl">
