@@ -36,7 +36,7 @@ const Header = () => {
             </div>
           </a>
           <a
-            href="/register"
+            href="/account"
             className="text-center hover:text-primary transition relative"
           >
             <div className="xs:text-2xl md:text-4xl">

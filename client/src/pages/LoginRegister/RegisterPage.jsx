@@ -7,12 +7,12 @@ import Register from '../../components/Register/Register'
 const RegisterPage = () => {
   return (
     <>
-    <Header />
-    <Navbar />
-    <Register />
-    <Contact />
+      <Header />
+      <Navbar />
+      <Register />
+      <Contact />
     </>
-  )
+  );
 }
 
 export default RegisterPage

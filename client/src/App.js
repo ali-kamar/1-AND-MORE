@@ -5,6 +5,7 @@ import Contact from "./components/Contact/Contact";
 import RegisterPage from "./pages/LoginRegister/RegisterPage";
 import LoginPage from "./pages/LoginRegister/LoginPage";
 import WhishlistPage from "./pages/Whishlist/WhishlistPage";
+import AccountPage from "./pages/Account/AccountPage";
  
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/whishlist" element={<WhishlistPage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
       </Router>
     </div>
