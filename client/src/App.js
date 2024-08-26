@@ -6,6 +6,7 @@ import RegisterPage from "./pages/LoginRegister/RegisterPage";
 import LoginPage from "./pages/LoginRegister/LoginPage";
 import WhishlistPage from "./pages/Whishlist/WhishlistPage";
 import AccountPage from "./pages/Account/AccountPage";
+import ShopPage from "./pages/Shop/ShopPage";
  
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/whishlist" element={<WhishlistPage />} />
           <Route path="/account" element={<AccountPage />} />
+          <Route path="/shop" element={<ShopPage />} />
         </Routes>
       </Router>
     </div>
