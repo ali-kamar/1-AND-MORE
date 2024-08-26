@@ -1,14 +1,11 @@
 import React from "react";
+import Logo from "../../assets/images/logo.JPG"
 
 const ViewProduct = () => {
   return (
-    <div class="container grid grid-cols-2 gap-6 my-10">
+    <div class="container md:grid md:grid-cols-2 gap-6 my-10 xs:flex xs:flex-col">
       <div>
-        <img
-          src="../assets/images/products/product1.jpg"
-          alt="product"
-          class="w-full"
-        />
+        <img src={Logo} alt="product" class="w-full" />
       </div>
 
       <div>
@@ -39,7 +36,7 @@ const ViewProduct = () => {
           <p class="text-base text-gray-400 line-through">$55.00</p>
         </div>
 
-        <p class="mt-4 text-gray-600">
+        <p class="mt-4 text-gray-600 text-justify">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos eius eum
           reprehenderit dolore vel mollitia optio consequatur hic asperiores
           inventore suscipit, velit consequuntur, voluptate doloremque iure
@@ -62,18 +59,12 @@ const ViewProduct = () => {
         </div>
 
         <div class="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-          <a
-            href="/cart"
-            class="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition"
-          >
+          <button class="bg-primary border border-primary text-white xs:p-2 xs:font-x sm:px-8 sm:py-2 xs:text-sm sm:text-17 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">
             <i class="fa-solid fa-bag-shopping"></i> Add to cart
-          </a>
-          <a
-            href="/whishlist"
-            class="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition"
-          >
+          </button>
+          <button class="border border-gray-300 text-gray-600 xs:p-2 xs:font-x sm:px-8 sm:py-2 xs:text-sm sm:text-17 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition">
             <i class="fa-solid fa-heart"></i> Wishlist
-          </a>
+          </button>
         </div>
       </div>
     </div>
