@@ -1,36 +1,61 @@
 import React from "react";
+import Searchbar from "./Searchbar";
+import Logo from "../../assets/images/logo.JPG"
 
 const Products = () => {
   return (
     <div className="my-10">
-      <div className="flex justify-center">
-        <div className="w-full lg:max-w-xl relative flex md:max-w-md xs:max-w-sm">
-          <span className="mt-3 mr-3 cursor-pointer " title="Reset All Filters">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
+      <Searchbar />
+
+      <div class="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">
+        <div class="bg-white shadow rounded overflow-hidden group">
+          <div class="relative">
+            <img src={Logo} alt="product 1" class="w-full" />
+            <div
+              class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
+                                justify-center gap-2 opacity-0 group-hover:opacity-100 transition"
             >
-              <path
-                fill="currentColor"
-                d="M17.65 6.35A7.96 7.96 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z"
-              />
-            </svg>
-          </span>
-          <input
-            type="text"
-            name="search"
-            id="search"
-            className="w-full border border-primary rounded-none p-3 focus:outline-none "
-            placeholder="Search products..."
-          />
-          <button className="bg-primary items-center border border-primary text-white xs:px-3 lg:px-8  hover:bg-transparent hover:text-primary transition ">
-            Search
-          </button>
-          <button className="ml-2 bg-primary items-center border border-primary text-white xs:px-3 lg:px-8  hover:bg-transparent hover:text-primary transition ">
-            Filters
-          </button>
+              <a
+                href="#"
+                class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
+                title="view product"
+              >
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </a>
+              <a
+                href="#"
+                class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
+                title="add to wishlist"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </a>
+            </div>
+          </div>
+          <div class="pt-4 pb-3 px-4">
+            <a href="#">
+              <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
+                Guyer Chair
+              </h4>
+            </a>
+            <div class="flex items-baseline mb-1 space-x-2">
+              <p class="text-xl text-primary font-semibold">$45.00</p>
+              <p class="text-sm text-gray-400 line-through">$55.90</p>
+            </div>
+            <div class="flex items-center">
+              <div class="flex gap-1 text-sm text-yellow-400">
+                <span>
+                  <i class="fa-solid fa-star"></i>
+                </span>
+              </div>
+              <div class="text-xs text-gray-500 ml-3">(150)</div>
+            </div>
+          </div>
+          <a
+            href="#"
+            class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
+          >
+            View
+          </a>
         </div>
       </div>
     </div>
