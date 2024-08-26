@@ -1,6 +1,6 @@
 import React from "react";
 import Searchbar from "./Searchbar";
-import Logo from "../../assets/images/logo.JPG"
+import Logo from "../../assets/images/logo.JPG";
 
 const Products = () => {
   return (
@@ -11,28 +11,9 @@ const Products = () => {
         <div class="bg-white shadow rounded overflow-hidden group">
           <div class="relative">
             <img src={Logo} alt="product 1" class="w-full" />
-            <div
-              class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                                justify-center gap-2 opacity-0 group-hover:opacity-100 transition"
-            >
-              <a
-                href="#"
-                class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                title="view product"
-              >
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </a>
-              <a
-                href="#"
-                class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                title="add to wishlist"
-              >
-                <i class="fa-solid fa-heart"></i>
-              </a>
-            </div>
           </div>
           <div class="pt-4 pb-3 px-4">
-            <a href="#">
+            <a href="/product">
               <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
                 Guyer Chair
               </h4>

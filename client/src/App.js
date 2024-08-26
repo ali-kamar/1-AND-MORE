@@ -8,6 +8,7 @@ import WhishlistPage from "./pages/Whishlist/WhishlistPage";
 import AccountPage from "./pages/Account/AccountPage";
 import ShopPage from "./pages/Shop/ShopPage";
 import ViewProductPage from "./pages/Shop/ViewProductPage";
+import Cart from "./pages/Cart/Cart";
  
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/account" element={<AccountPage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product" element={<ViewProductPage />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>
     </div>
