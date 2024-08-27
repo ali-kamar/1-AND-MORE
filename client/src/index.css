@@ -10,3 +10,29 @@
     @apply font-urbanist
  }
 }
+
+
+/* index.css or App.css */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px; /* Adjust the height of the scrollbar */
+  width: 6px;  /* Adjust the width for vertical scroll */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #000; /* Handle color set to black */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Handle hover color */
+}
+
+/* Firefox scrollbar styling */
+.custom-scrollbar {
+  scrollbar-color: #000 #f1f1f1; /* Handle color and track color */
+  scrollbar-width: thin; /* Adjust width for Firefox */
+}
+
