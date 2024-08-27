@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import CartProduct from "../../components/Cart/CartProduct/CartProduct";
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
 import Contact from "../../components/Contact/Contact";
+import CartSummary from "../../components/Cart/CartSummary/CartSummary";
 
 const Cart = () => {
+  const [isCheckout, setCheckout] = useState(false);
+  const closeCheckout = () => {
+    setCheckout(false)
+  }
+
   return (
     <>
       <Header />
@@ -31,13 +37,21 @@ const Cart = () => {
         </div>
       </div>
       <div className="flex justify-center my-5">
-        <button className="bg-primary items-center border rounded border-primary text-white p-4 hover:bg-transparent hover:text-primary transition">
+        <button
+          className="bg-primary items-center border rounded border-primary text-white p-4 hover:bg-transparent hover:text-primary transition"
+          onClick={() => setCheckout(true)}
+        >
           Checkout
         </button>
         <button className="ml-2 bg-black items-center border rounded border-black text-white p-4 hover:bg-transparent hover:text-primary transition">
           Clear
         </button>
       </div>
+      {isCheckout && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+          <CartSummary closeCheckout={closeCheckout} />
+        </div>
+      )}
       <Contact />
     </>
   );
