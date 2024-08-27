@@ -12,14 +12,6 @@ const ViewProduct = () => {
         <h2 class="text-3xl font-medium uppercase mb-2">
           Italian L Shape Sofa
         </h2>
-        <div class="flex items-center mb-4">
-          <div class="flex gap-1 text-sm text-yellow-400">
-            <span>
-              <i class="fa-solid fa-star"></i>
-            </span>
-          </div>
-          <div class="text-xs text-gray-500 ml-3">(150 Reviews)</div>
-        </div>
         <div class="space-y-2">
           <p class="text-gray-800 font-semibold space-x-2">
             <span>Availability: </span>
