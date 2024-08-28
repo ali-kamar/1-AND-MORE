@@ -5,8 +5,8 @@ import Logo from "../../assets/images/logo.JPG"
 
 const ProductsDashboard = () => {
   return (
-    <tr className="border-t border-gray-200">
-      <td className="py-4 px-4 min-w-[200px]">
+    <tr className="">
+      <td className="py-4 px-4 min-w-[200px] border border-black">
         <div className="flex items-center gap-2">
           <img
             src={Logo}
@@ -16,23 +16,23 @@ const ProductsDashboard = () => {
         </div>
       </td>
 
-      <td className="py-4 px-4 text-center min-w-[120px]">
+      <td className="font-semibold py-4 px-4 text-center min-w-[120px] border border-black">
         <p>Name</p>
       </td>
 
-      <td className="py-4 px-4 text-center min-w-[120px]">
+      <td className="py-4 px-4 text-center min-w-[120px] border border-black">
         <span className="text-black font-semibold">Description</span>
       </td>
 
-      <td className="py-4 px-4 text-center min-w-[120px]">
+      <td className="py-4 px-4 text-center min-w-[120px] border border-black">
         <span className="text-black font-semibold">$price</span>
       </td>
 
-      <td className="py-4 px-4 text-center min-w-[120px]">
+      <td className="py-4 px-4 text-center min-w-[120px] border border-black">
         <span className="text-black font-semibold">offer</span>
       </td>
 
-      <td className="py-4 px-4 text-center min-w-[80px]">
+      <td className="py-4 px-4 text-center min-w-[80px] border border-black">
         <div className="flex justify-center gap-5">
           <button className="text-primary hover:text-gray-800 text-2xl">
             <FaTrashAlt />

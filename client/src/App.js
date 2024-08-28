@@ -9,8 +9,7 @@ import AccountPage from "./pages/Account/AccountPage";
 import ShopPage from "./pages/Shop/ShopPage";
 import ViewProductPage from "./pages/Shop/ViewProductPage";
 import Cart from "./pages/Cart/Cart";
-import CartSummary from "./components/Cart/CartSummary/CartSummary";
-import Dashboard from "./components/Admin/Dashboard";
+import AdminPage from "./pages/Admin/AdminPage";
 
 function App() {
   return (
@@ -27,8 +26,7 @@ function App() {
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product" element={<ViewProductPage />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/carts" element={<CartSummary />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </Router>
     </div>
