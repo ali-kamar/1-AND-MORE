@@ -9,7 +9,7 @@ const categories = [
 
 const AddCategory = () => {
   return (
-    <div>
+    <div className="pt-3">
       <h2 className="text-4xl font-semibold text-center my-10">Add Category</h2>
       <div className="flex justify-center mb-10">
         <div className="w-full lg:max-w-l relative flex md:max-w-md xs:max-w-xs">

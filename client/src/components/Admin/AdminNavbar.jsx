@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Navbar = () => {
+const AdminNavbar = () => {
   return (
     <nav className="bg-primary">
       <div className="flex px-2">
@@ -27,7 +27,7 @@ const Navbar = () => {
             </a>
           </div>
           <a
-            href="/admin-account"
+            href="/admin/account"
             className="text-gray-200 hover:text-white transition"
           >
             Account
@@ -38,4 +38,4 @@ const Navbar = () => {
   );
 }
 
-export default Navbar
+export default AdminNavbar

@@ -4,7 +4,7 @@ import ProductsDashboard from "./ProductsDashboard";
 
 const Dashboard = () => {
   return (
-    <div className="my-10 p-3">
+    <div className="p-3">
       <h2 className="text-4xl font-semibold text-center my-10">Dashboard</h2>
       <Searchbar />
       <div className="w-full overflow-x-auto my-10">

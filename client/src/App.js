@@ -10,6 +10,7 @@ import ViewProductPage from "./pages/Shop/ViewProductPage";
 import Cart from "./pages/Cart/Cart";
 import AdminPage from "./pages/Admin/AdminPage";
 import AddCategoryPage from "./pages/Admin/AddCategoryPage";
+import AdminAccountPage from "./pages/Admin/AdminAccountPage";
 
 //Context
 import { FilterProvider } from "./contexts/Filter/FilterProvider";
@@ -30,6 +31,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/add-category" element={<AddCategoryPage />} />
+          <Route path="/admin/account" element={<AdminAccountPage />} />
         </Routes>
       </Router>
     </FilterProvider>
