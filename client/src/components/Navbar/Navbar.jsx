@@ -19,8 +19,8 @@ const Navbar = () => {
               Shop
             </a>
 
-            <a href="/about" className="text-gray-200 hover:text-white transition">
-              About
+            <a href="/orders" className="text-gray-200 hover:text-white transition">
+              Orders
             </a>
           </div>
           <a
