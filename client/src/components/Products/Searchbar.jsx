@@ -1,6 +1,8 @@
 import React from 'react'
+import { useFilter } from '../../contexts/Filter/FilterProvider';
 
 const Searchbar = () => {
+  const { toggleFilter} = useFilter()
   return (
     <div className="flex justify-center">
       <div className="w-full lg:max-w-xl relative flex md:max-w-md xs:max-w-sm">
@@ -27,12 +29,15 @@ const Searchbar = () => {
         <button className="bg-primary items-center border border-primary text-white xs:px-3 lg:px-8  hover:bg-transparent hover:text-primary transition ">
           Search
         </button>
-        <button className="ml-2 bg-primary items-center border border-primary text-white xs:px-3 lg:px-8  hover:bg-transparent hover:text-primary transition ">
+        <button
+          className="ml-2 bg-primary items-center border border-primary text-white xs:px-3 lg:px-8  hover:bg-transparent hover:text-primary transition "
+          onClick={toggleFilter}
+        >
           Filters
         </button>
       </div>
     </div>
   );
-}
+};
 
 export default Searchbar

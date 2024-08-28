@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Searchbar from "./Searchbar";
 import Logo from "../../assets/images/logo.JPG";
 
 const Products = () => {
+
   return (
     <div className="my-10">
       <Searchbar />

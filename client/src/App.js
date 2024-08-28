@@ -11,9 +11,12 @@ import ViewProductPage from "./pages/Shop/ViewProductPage";
 import Cart from "./pages/Cart/Cart";
 import AdminPage from "./pages/Admin/AdminPage";
 
+//Context
+import { FilterProvider } from "./contexts/Filter/FilterProvider";
+
 function App() {
   return (
-    <div>
+    <FilterProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -29,7 +32,7 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </Router>
-    </div>
+    </FilterProvider>
   );
 }
 

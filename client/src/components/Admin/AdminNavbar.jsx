@@ -1,12 +1,15 @@
-import React from "react";
+import React from 'react'
 
-const AdminNavbar = () => {
+const Navbar = () => {
   return (
     <nav className="bg-primary">
-      <div className="container flex">
-        <div className="flex items-center justify-between flex-grow md:pl-12 py-5">
+      <div className="flex px-2">
+        <div className="flex items-center justify-between flex-grow md:px-12 py-5">
           <div className="flex items-center space-x-6 capitalize">
-            <a href="/dashboard" className="text-gray-200 hover:text-white transition">
+            <a
+              href="/admin"
+              className="text-gray-200 hover:text-white transition"
+            >
               Dashboard
             </a>
             <a
@@ -16,17 +19,20 @@ const AdminNavbar = () => {
               Add Product
             </a>
 
-            <a
-              href="/add-category"
-              className="text-gray-200 hover:text-white transition"
-            >
+            <a href="/add-category" className="text-gray-200 hover:text-white transition">
               Add Category
             </a>
           </div>
+          <a
+            href="/admin-account"
+            className="text-gray-200 hover:text-white transition"
+          >
+            Account
+          </a>
         </div>
       </div>
     </nav>
   );
-};
+}
 
-export default AdminNavbar;
+export default Navbar
