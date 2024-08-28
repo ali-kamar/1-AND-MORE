@@ -1,6 +1,5 @@
 import Home from "./pages/Home/Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import About from "./components/About/About";
 import Contact from "./components/Contact/Contact";
 import RegisterPage from "./pages/LoginRegister/RegisterPage";
 import LoginPage from "./pages/LoginRegister/LoginPage";
@@ -10,6 +9,7 @@ import ShopPage from "./pages/Shop/ShopPage";
 import ViewProductPage from "./pages/Shop/ViewProductPage";
 import Cart from "./pages/Cart/Cart";
 import AdminPage from "./pages/Admin/AdminPage";
+import AddCategory from "./components/Admin/AddCategory";
 
 //Context
 import { FilterProvider } from "./contexts/Filter/FilterProvider";
@@ -29,6 +29,7 @@ function App() {
           <Route path="/product" element={<ViewProductPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/add-category" element={<AddCategory />} />
         </Routes>
       </Router>
     </FilterProvider>

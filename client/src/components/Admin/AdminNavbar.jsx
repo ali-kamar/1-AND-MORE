@@ -19,7 +19,10 @@ const Navbar = () => {
               Add Product
             </a>
 
-            <a href="/add-category" className="text-gray-200 hover:text-white transition">
+            <a
+              href="/admin/add-category"
+              className="text-gray-200 hover:text-white transition"
+            >
               Add Category
             </a>
           </div>
