@@ -13,11 +13,11 @@ const CartSummary = ({ closeCheckout }) => {
       {/* Inputs */}
       <div>
         <div className="mb-5">
-          <label htmlFor="address">Address</label>
+          <label htmlFor="name">Name</label>
           <br />
           <input
             type="text"
-            name="address"
+            name="name"
             id=""
             className="w-full p-1 rounded"
           />
@@ -28,6 +28,16 @@ const CartSummary = ({ closeCheckout }) => {
           <input
             type="number"
             name="phone"
+            id=""
+            className="w-full p-1 rounded"
+          />
+        </div>
+        <div className="mb-5">
+          <label htmlFor="address">Address</label>
+          <br />
+          <input
+            type="text"
+            name="address"
             id=""
             className="w-full p-1 rounded"
           />

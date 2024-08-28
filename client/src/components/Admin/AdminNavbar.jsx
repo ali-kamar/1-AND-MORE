@@ -5,7 +5,7 @@ const AdminNavbar = () => {
     <nav className="bg-primary">
       <div className="flex px-2">
         <div className="flex items-center justify-between flex-grow md:px-12 py-5">
-          <div className="flex items-center space-x-6 capitalize">
+          <div className="flex items-center space-x-6 capitalize pr-5 text-center">
             <a
               href="/admin"
               className="text-gray-200 hover:text-white transition"
@@ -14,7 +14,7 @@ const AdminNavbar = () => {
             </a>
             <a
               href="/add-product"
-              className="text-gray-200 hover:text-white transition"
+              className="text-gray-200 hover:text-white transition "
             >
               Add Product
             </a>
@@ -24,6 +24,12 @@ const AdminNavbar = () => {
               className="text-gray-200 hover:text-white transition"
             >
               Add Category
+            </a>
+            <a
+              href="/admin/orders"
+              className="text-gray-200 hover:text-white transition"
+            >
+              Orders
             </a>
           </div>
           <a
