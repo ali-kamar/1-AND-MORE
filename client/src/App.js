@@ -9,7 +9,7 @@ import ShopPage from "./pages/Shop/ShopPage";
 import ViewProductPage from "./pages/Shop/ViewProductPage";
 import Cart from "./pages/Cart/Cart";
 import AdminPage from "./pages/Admin/AdminPage";
-import AddCategory from "./components/Admin/AddCategory";
+import AddCategoryPage from "./pages/Admin/AddCategoryPage";
 
 //Context
 import { FilterProvider } from "./contexts/Filter/FilterProvider";
@@ -29,7 +29,7 @@ function App() {
           <Route path="/product" element={<ViewProductPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/admin" element={<AdminPage />} />
-          <Route path="/admin/add-category" element={<AddCategory />} />
+          <Route path="/admin/add-category" element={<AddCategoryPage />} />
         </Routes>
       </Router>
     </FilterProvider>
