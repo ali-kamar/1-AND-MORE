@@ -13,6 +13,7 @@ import AddCategoryPage from "./pages/Admin/AddCategoryPage";
 import AdminAccountPage from "./pages/Admin/AdminAccountPage";
 import OrdersPage from "./pages/Admin/OrdersPage";
 import OrdersUser from "./pages/Orders/OrdersUser";
+import AddProductsPage from "./pages/Admin/AddProductsPage";
 
 //Context
 import { FilterProvider } from "./contexts/Filter/FilterProvider";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/admin/add-category" element={<AddCategoryPage />} />
           <Route path="/admin/account" element={<AdminAccountPage />} />
           <Route path="/admin/orders" element={<OrdersPage />} />
+          <Route path="/admin/add-product" element={<AddProductsPage />} />
           <Route path="/orders" element={<OrdersUser />} />
         </Routes>
       </Router>
