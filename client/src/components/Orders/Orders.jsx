@@ -4,7 +4,7 @@ const Orders = () => {
   return (
     <div>
       <div class="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">
-        <div class="bg-white shadow rounded overflow-hidden p-4">
+        <div class="bg-white shadow rounded overflow-hidden p-4 border border-primary">
           <h4 className="uppercase font-medium xs:text-base md:text-xl mb-2 text-gray-800 ">
             Order ID: <span className="xs:text-xs md:text-sm"></span>
           </h4>

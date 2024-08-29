@@ -2,8 +2,8 @@ import React from "react";
 
 const AddProducts = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-lg my-10 mx-2">
+    <div className="flex justify-center items-center min-h-screen ">
+      <div className="border border-primary bg-white p-8 rounded-md shadow-md w-full max-w-lg my-10 mx-2">
         <h2 className="text-2xl font-semibold mb-6">Add Product</h2>
 
         <div className="mb-4">
