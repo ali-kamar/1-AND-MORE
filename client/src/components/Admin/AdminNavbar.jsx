@@ -13,7 +13,7 @@ const AdminNavbar = () => {
               Dashboard
             </a>
             <a
-              href="/add-product"
+              href="/admin/add-product"
               className="text-gray-200 hover:text-white transition "
             >
               Add Product

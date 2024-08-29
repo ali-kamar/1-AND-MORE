@@ -35,10 +35,10 @@ const ProductsDashboard = () => {
       <td className="py-4 px-4 text-center min-w-[80px] border border-black">
         <div className="flex justify-center gap-5">
           <button className="text-primary hover:text-gray-800 text-2xl">
-            <FaTrashAlt />
+            <AiOutlineEdit />
           </button>
           <button className="text-primary hover:text-gray-800 text-2xl">
-            <AiOutlineEdit />
+            <FaTrashAlt />
           </button>
         </div>
       </td>

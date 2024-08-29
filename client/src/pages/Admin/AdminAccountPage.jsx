@@ -1,14 +1,14 @@
 import React from 'react'
-import AdminAccount from '../../components/Admin/AdminAccount'
+import Account from '../../components/Account/Account'
 import AdminNavbar from '../../components/Admin/AdminNavbar'
 
 const AdminAccountPage = () => {
   return (
     <>
-    <AdminNavbar />
-    <AdminAccount />
+      <AdminNavbar />
+      <Account />
     </>
-  )
+  );
 }
 
 export default AdminAccountPage
