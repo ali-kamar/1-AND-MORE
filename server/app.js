@@ -10,7 +10,7 @@ const express = require("express");
 const app = express();
 
 
-const todosRouter = require("./routes/todos");
+const authenticationRouter = require("./routes/todos");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -31,7 +31,7 @@ app.use(helmet());
 app.use(cors());
 app.use(xss());
 // routes
-app.use("/api/v1/todos", todosRouter);
+app.use("/api/v1/auth", authenticationRouter);
 
 // app.get('/', (req, res) => {
 //   res.send('<h1>Todo-List</h1>');
