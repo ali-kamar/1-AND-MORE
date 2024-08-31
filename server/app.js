@@ -12,6 +12,7 @@ const app = express();
 
 
 const authenticationRouter = require("./routes/auth");
+const userRouter = require("./routes/user");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -33,6 +34,7 @@ app.use(cors());
 app.use(xss());
 // routes
 app.use("/api/v1/auth", authenticationRouter);
+app.use("/api/v1/user", userRouter);
 
 // app.get('/', (req, res) => {
 //   res.send('<h1>Todo-List</h1>');
