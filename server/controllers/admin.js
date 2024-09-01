@@ -68,7 +68,29 @@ const editCategory = async (req, res) => {
   res.status(StatusCodes.OK).json(updatedCategory.rows[0]);
 };
 
+const deleteCategory = async (req, res) => {
+
+    const { id } = req.params;
+
+    // Check if the category exists
+    const category = await pool.query(
+      "SELECT * FROM categories WHERE category_id = $1",
+      [id]
+    );
+
+    if (category.rows.length === 0) {
+      throw new NotFoundError("Category not found");
+    }
+
+    // Delete the category
+    const deleteCategory = await pool.query("DELETE FROM categories WHERE category_id = $1", [id]);
+
+    res.status(StatusCodes.OK).json({ message: "Category deleted successfully." });
+
+};
+
 module.exports = {
   addCategory,
   editCategory,
+  deleteCategory,
 };
