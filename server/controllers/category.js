@@ -2,6 +2,14 @@ const pool = require("../db/connect");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
+const getAllCategories = async (req, res) => {
+  const categories = await pool.query("SELECT * FROM categories");
+
+  res.status(StatusCodes.OK).json(categories.rows)
+  
+}
+
+
 const addCategory = async (req, res) => {
   const { categoryName } = req.body;
 
@@ -93,4 +101,5 @@ module.exports = {
   addCategory,
   editCategory,
   deleteCategory,
+  getAllCategories,
 };
