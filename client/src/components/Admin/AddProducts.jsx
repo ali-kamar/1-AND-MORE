@@ -74,7 +74,6 @@ const AddProducts = () => {
               clearable
               tabs="file url"
             />
-            
           </div>
 
           <div className="mb-4">
@@ -83,19 +82,40 @@ const AddProducts = () => {
             </label>
             <div className="flex flex-wrap gap-2">
               <label className="flex items-center">
-                <input type="checkbox" className="mr-2 cursor-pointer" /> Home
-                equipment
+                <input
+                  type="radio"
+                  name="category" // All radio buttons should have the same name
+                  value="Home equipment"
+                  className="mr-2 cursor-pointer"
+                />
+                Home equipment
               </label>
               <label className="flex items-center">
-                <input type="checkbox" className="mr-2 cursor-pointer" />{" "}
+                <input
+                  type="radio"
+                  name="category"
+                  value="Kitchen"
+                  className="mr-2 cursor-pointer"
+                />
                 Kitchen
               </label>
               <label className="flex items-center">
-                <input type="checkbox" className="mr-2 cursor-pointer" />{" "}
+                <input
+                  type="radio"
+                  name="category"
+                  value="Accessories"
+                  className="mr-2 cursor-pointer"
+                />
                 Accessories
               </label>
               <label className="flex items-center">
-                <input type="checkbox" className="mr-2 cursor-pointer" /> Toys
+                <input
+                  type="radio"
+                  name="category"
+                  value="Toys"
+                  className="mr-2 cursor-pointer"
+                />
+                Toys
               </label>
             </div>
           </div>
