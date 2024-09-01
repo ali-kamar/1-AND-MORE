@@ -16,7 +16,10 @@ CREATE TABLE Products (
     imageUrl VARCHAR(255) NOT NULL,
     category VARCHAR(255) NOT NULL,
     isAvailable BOOLEAN DEFAULT TRUE,
-    offerType DECIMAL(10, 2),
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    offerType DECIMAL(10, 2)
+);
+
+CREATE TABLE Categories (
+    category_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    category_name VARCHAR(255) NOT NULL UNIQUE
 );
