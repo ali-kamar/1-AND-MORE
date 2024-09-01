@@ -36,3 +36,13 @@
   scrollbar-width: thin; /* Adjust width for Firefox */
 }
 
+.uploadcare--widget__button_type_open {
+    background: #fd3d57;
+    color: #fff;
+    cursor: pointer;
+}
+.uploadcare--widget__button_type_open:hover {
+    background: black;
+    color: #fff;
+}
+

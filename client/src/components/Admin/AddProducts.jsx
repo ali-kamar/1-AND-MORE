@@ -74,15 +74,7 @@ const AddProducts = () => {
               clearable
               tabs="file url"
             />
-            {imageUrl && (
-              <div className="mt-4">
-                <img
-                  src={imageUrl}
-                  alt="Uploaded"
-                  className="w-full max-w-xs"
-                />
-              </div>
-            )}
+            
           </div>
 
           <div className="mb-4">
