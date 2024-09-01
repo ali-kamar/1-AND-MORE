@@ -2,8 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
-const { account, updateAccount } = require("../controllers/user");
+const { getAccount, updateAccount } = require("../controllers/user");
 
-router.route("/:id").get(account).post(updateAccount);
+router.route("/:id").get(getAccount).patch(updateAccount);
 
 module.exports = router

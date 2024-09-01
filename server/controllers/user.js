@@ -2,7 +2,7 @@ const pool = require("../db/connect");
 const { StatusCodes } = require("http-status-codes");
 const { UserError, BadRequestError } = require("../errors");
 
-const account = async (req, res) => {
+const getAccount = async (req, res) => {
   const userId = req.params.id;
   const user = await pool.query(
     "SELECT user_email,user_name FROM users WHERE user_id = $1",
@@ -46,4 +46,4 @@ const updateAccount = async (req, res) => {
   res.status(StatusCodes.OK).json({ message: "Account updated successfully" });
 };
 
-module.exports = { account, updateAccount };
+module.exports = { getAccount, updateAccount };

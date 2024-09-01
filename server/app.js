@@ -13,6 +13,7 @@ const app = express();
 
 const authenticationRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const adminRouter = require("./routes/admin");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -35,6 +36,7 @@ app.use(xss());
 // routes
 app.use("/api/v1/auth", authenticationRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/admin", adminRouter);
 
 // app.get('/', (req, res) => {
 //   res.send('<h1>Todo-List</h1>');
