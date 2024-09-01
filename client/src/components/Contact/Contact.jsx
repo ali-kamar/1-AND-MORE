@@ -65,8 +65,8 @@ const Contact = () => {
                   </div>
                   <div class="ml-4 mb-4">
                     <h3 class="mb-2 text-lg font-medium leading-6">Contact</h3>
-                    <p class="">Mobile: +961 70609186</p>
-                    <p class="">Mail: alimk03@gmail.com</p>
+                    <p class="">Mobile: +961 78806759</p>
+                    <p class="">Mail: onedollarandmoreshop@gmail.com</p>
                   </div>
                 </li>
                 <li class="flex">

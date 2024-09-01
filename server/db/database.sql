@@ -23,3 +23,4 @@ CREATE TABLE Categories (
     category_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     category_name VARCHAR(255) NOT NULL UNIQUE
 );
+
