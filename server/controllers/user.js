@@ -1,6 +1,6 @@
 const pool = require("../db/connect");
 const { StatusCodes } = require("http-status-codes");
-const { UserError, BadRequestError } = require("../errors");
+const { UserError, BadRequestError, NotFoundError } = require("../errors");
 
 const getAccount = async (req, res) => {
   const userId = req.params.id;
@@ -70,4 +70,20 @@ const addToWishlist = async (req, res) => {
   });
 };
 
-module.exports = { getAccount, updateAccount };
+const getWishlist = async (req, res) => {
+  const query = `
+      SELECT p.product_id, p.name, p.price, p.imageurl, p.isavailable
+      FROM wishlist w
+      JOIN products p ON w.product_id = p.product_id;
+    `;
+
+  const result = await pool.query(query);
+
+  if (result.rows.length === 0) {
+    throw new NotFoundError("no products found");
+  }
+
+  res.status(200).json(result.rows);
+};
+
+module.exports = { getAccount, updateAccount, addToWishlist, getWishlist };
