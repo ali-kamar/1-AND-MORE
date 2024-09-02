@@ -9,25 +9,43 @@ const getAllProducts = async (req, res) => {
 };
 
 const getProduct = async (req, res) => {
-  const {id} = req.params
+  const { id } = req.params;
 
-  const product = await pool.query("SELECT * FROM products WHERE product_id = $1", [id]);
+  const product = await pool.query(
+    "SELECT * FROM products WHERE product_id = $1",
+    [id]
+  );
 
-  if(product.rows.length === 0){
-    throw new NotFoundError('No product found')
+  if (product.rows.length === 0) {
+    throw new NotFoundError("No product found");
   }
 
   res.status(StatusCodes.OK).json(product.rows[0]);
+};
+
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+
+  const deleteProduct = await pool.query(
+    "DELETE FROM products WHERE product_id = $1 RETURNING *",
+    [id]
+  );
+
+  if (deleteProduct.rows.length === 0) {
+    throw new NotFoundError("No product found");
+  }
+
+  res.status(StatusCodes.OK).json({ msg: "product deleted successfully" });
 };
 
 const addProduct = async (req, res) => {
   const { name, description, price, imageURL, category, isAvailable } =
     req.body;
 
-  if(!name || !price || !imageURL || !category){
+  if (!name || !price || !imageURL || !category) {
     throw new BadRequestError("Missing values");
   }
-  
+
   const fields = [];
   const values = [];
 
@@ -45,7 +63,7 @@ const addProduct = async (req, res) => {
     values.push(price);
   }
   if (imageURL) {
-    fields.push("imageUrl");
+    fields.push("imageurl");
     values.push(imageURL);
   }
   if (category) {
@@ -53,37 +71,84 @@ const addProduct = async (req, res) => {
     values.push(category);
   }
   if (isAvailable !== undefined) {
-    fields.push("isAvailable");
+    fields.push("isavailable");
     values.push(isAvailable);
   }
 
   // Construct the query string
   const queryFields = fields.join(", ");
   const queryPlaceholders = fields
-    .map((_,index) => `$${index + 1}`)
+    .map((_, index) => `$${index + 1}`)
     .join(", ");
   const query = `INSERT INTO products (${queryFields}) VALUES (${queryPlaceholders}) RETURNING *`;
 
-   const result = await pool.query(query, values);
+  const result = await pool.query(query, values);
 
   res.status(StatusCodes.CREATED).json(result.rows[0]);
 };
 
-const deleteProduct = async (req, res) => {
-   const { id } = req.params;
+const editProduct = async (req, res) => {
+  const { id } = req.params; // Assuming you're passing the product ID in the URL
+  const { name, description, price, imageURL, category, isAvailable, offer } =
+    req.body;
 
-  const deleteProduct = await pool.query(
-    "DELETE FROM products WHERE product_id = $1 RETURNING *",
-    [id]
-  );
+  if (!id) {
+    throw new BadRequestError("Product ID is required");
+  }
 
-   if (deleteProduct.rows.length === 0) {
-     throw new NotFoundError("No product found");
-   }
+  if (!name || !price || !imageURL || !category) {
+    throw new BadRequestError("Missing values");
+  }
 
-   res.status(StatusCodes.OK).json({msg: 'product deleted successfully'})
+  const fields = [];
+  const values = [];
 
-   
-}
+  // Dynamically populate fields and values based on available data
+  if (name) {
+    fields.push("name");
+    values.push(name);
+  }
+  if (description !== undefined) {
+    fields.push("description");
+    values.push(description || null); // Use null if description is an empty string
+  }
+  if (price) {
+    fields.push("price");
+    values.push(price);
+  }
+  if (offer) {
+    fields.push("offertype");
+    values.push(offer);
+  }
+  if (imageURL) {
+    fields.push("imageurl");
+    values.push(imageURL);
+  }
+  if (category) {
+    fields.push("category");
+    values.push(category);
+  }
+  if (isAvailable !== undefined) {
+    fields.push("isavailable");
+    values.push(isAvailable);
+  }
+
+  if (fields.length === 0) {
+    throw new BadRequestError("No fields provided for update");
+  }
+
+  // Construct the query string
+  const querySet = fields
+    .map((field, index) => `${field} = $${index + 1}`)
+    .join(", ");
+  values.push(id); // Add the product ID to the values array for the WHERE clause
+  const query = `UPDATE products SET ${querySet} WHERE id = $${
+    fields.length + 1
+  } RETURNING *`;
+
+  const result = await pool.query(query, values);
+
+  res.status(StatusCodes.OK).json(result.rows[0]);
+};
 
 module.exports = { getAllProducts, addProduct, getProduct, deleteProduct };
