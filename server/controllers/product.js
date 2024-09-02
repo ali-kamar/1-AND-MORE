@@ -3,9 +3,21 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const getAllProducts = async (req, res) => {
-  const categories = await pool.query("SELECT * FROM products");
+  const products = await pool.query("SELECT * FROM products");
 
-  res.status(StatusCodes.OK).json(categories.rows);
+  res.status(StatusCodes.OK).json(products.rows);
+};
+
+const getProduct = async (req, res) => {
+  const {id} = req.params
+
+  const product = await pool.query("SELECT * FROM products WHERE product_id = $1", [id]);
+
+  if(product.rows.length === 0){
+    throw new NotFoundError('No product found')
+  }
+
+  res.status(StatusCodes.OK).json(product.rows[0]);
 };
 
 const addProduct = async (req, res) => {
@@ -57,4 +69,4 @@ const addProduct = async (req, res) => {
   res.status(StatusCodes.CREATED).json(result.rows[0]);
 };
 
-module.exports = { getAllProducts, addProduct };
+module.exports = { getAllProducts, addProduct, getProduct };
