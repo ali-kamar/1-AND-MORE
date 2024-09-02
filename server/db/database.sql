@@ -24,3 +24,12 @@ CREATE TABLE Categories (
     category_name VARCHAR(255) NOT NULL UNIQUE
 );
 
+CREATE TABLE wishlist (
+    product_id UUID PRIMARY KEY REFERENCES products(product_id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    price NUMERIC(10, 2) NOT NULL,
+    isAvailable BOOLEAN NOT NULL
+);
+
+

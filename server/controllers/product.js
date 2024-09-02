@@ -92,7 +92,7 @@ const editProduct = async (req, res) => {
   const { name, description, price, imageURL, category, isAvailable, offer } =
     req.body;
 
-    console.log(offer);
+
     
   if (!id) {
     throw new BadRequestError("Product ID is required");
@@ -138,7 +138,7 @@ const editProduct = async (req, res) => {
   if (fields.length === 0) {
     throw new BadRequestError("No fields provided for update");
   }
-  console.log(fields);
+
   
 
   // Construct the query string
