@@ -21,8 +21,10 @@ const updateAccount = async (req, res) => {
   const values = [];
 
   if (email) {
-    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
-    if(user.rows.length !== 0) throw new UserError("email already exists");
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
+      email,
+    ]);
+    if (user.rows.length !== 0) throw new UserError("email already exists");
     fields.push("user_email = $1");
     values.push(email);
   }
@@ -44,6 +46,28 @@ const updateAccount = async (req, res) => {
 
   // Return success response
   res.status(StatusCodes.OK).json({ message: "Account updated successfully" });
+};
+
+const addToWishlist = async (req, res) => {
+  const { product_id } = req.body;
+
+  const product = await pool.query(
+    "SELECT * FROM wishlist WHERE product_id = $1",
+    [product_id]
+  );
+
+  if (product.rows.length !== 0) {
+    throw new UserError("product already added!");
+  }
+
+  const result = await pool.query(
+    "INSERT INTO wishlist (product_id) VALUES ($1) RETURNING *",
+    [product_id]
+  );
+
+  res.status(StatusCodes.CREATED).json({
+    wishlistItem: result.rows[0],
+  });
 };
 
 module.exports = { getAccount, updateAccount };
