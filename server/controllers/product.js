@@ -92,6 +92,8 @@ const editProduct = async (req, res) => {
   const { name, description, price, imageURL, category, isAvailable, offer } =
     req.body;
 
+    console.log(offer);
+    
   if (!id) {
     throw new BadRequestError("Product ID is required");
   }
@@ -136,13 +138,15 @@ const editProduct = async (req, res) => {
   if (fields.length === 0) {
     throw new BadRequestError("No fields provided for update");
   }
+  console.log(fields);
+  
 
   // Construct the query string
   const querySet = fields
     .map((field, index) => `${field} = $${index + 1}`)
     .join(", ");
   values.push(id); // Add the product ID to the values array for the WHERE clause
-  const query = `UPDATE products SET ${querySet} WHERE id = $${
+  const query = `UPDATE products SET ${querySet} WHERE product_id = $${
     fields.length + 1
   } RETURNING *`;
 
@@ -151,4 +155,10 @@ const editProduct = async (req, res) => {
   res.status(StatusCodes.OK).json(result.rows[0]);
 };
 
-module.exports = { getAllProducts, addProduct, getProduct, deleteProduct };
+module.exports = {
+  getAllProducts,
+  addProduct,
+  getProduct,
+  deleteProduct,
+  editProduct,
+};

@@ -6,6 +6,7 @@ const {
   addProduct,
   getProduct,
   deleteProduct,
+  editProduct,
 } = require("../controllers/product");
 
 const {
@@ -22,5 +23,6 @@ router.route("/category/:id").patch(editCategory).delete(deleteCategory);
 router.route("/product/").get(getAllProducts);
 router.route("/product/:id").get(getProduct).delete(deleteProduct);
 router.route("/product/add-product").post(addProduct);
+router.route("/product/edit-product/:id").patch(editProduct);
 
 module.exports = router;
