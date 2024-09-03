@@ -3,7 +3,35 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const getAllProducts = async (req, res) => {
-  const products = await pool.query("SELECT * FROM products");
+  const { category, sort, minPrice, maxPrice } = req.query;
+
+  let query = "SELECT * FROM products WHERE 1=1"; // Start with a base query
+  const values = [];
+
+  if (category) {
+    query += " AND category = $1";
+    values.push(category);
+  }
+
+  if (minPrice) {
+    query += ` AND price >= $${values.length + 1}`;
+    values.push(minPrice);
+  }
+
+  if (maxPrice) {
+    query += ` AND price <= $${values.length + 1}`;
+    values.push(maxPrice);
+  }
+
+  if (sort) {
+    if (sort === "asc") {
+      query += " ORDER BY price ASC";
+    } else if (sort === "desc") {
+      query += " ORDER BY price DESC";
+    }
+  }
+
+  const products = await pool.query(query, values);
 
   res.status(StatusCodes.OK).json(products.rows);
 };
