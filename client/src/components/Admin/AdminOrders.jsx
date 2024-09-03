@@ -1,6 +1,6 @@
 import React from "react";
 
-const Orders = () => {
+const AdminOrders = () => {
   return (
     <div>
       <div class="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">
@@ -28,6 +28,12 @@ const Orders = () => {
             </p>
           </div>
 
+          <label htmlFor="status">Status: </label>
+          <select name="status" id="" className="border border-primary rounded">
+            <option value="">Pending</option>
+            <option value="">Processing</option>
+            <option value="">Delivered</option>
+          </select>
           <div>
             <p>3 toys for $</p>
             <p>3 home for $</p>
@@ -38,4 +44,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default AdminOrders;
