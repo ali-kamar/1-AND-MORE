@@ -26,6 +26,9 @@ const Orders = () => {
             <p class="xs:text-sm md:text-xl text-primary font-semibold">
               Total: <span className="xs:text-xs md:text-sm"></span>
             </p>
+            <p class="xs:text-sm md:text-xl text-primary font-semibold">
+              Status: <span className="xs:text-xs md:text-sm"></span>
+            </p>
           </div>
 
           <div>
