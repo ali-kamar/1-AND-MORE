@@ -21,4 +21,22 @@ const getOrders = async (req, res) => {
   res.status(StatusCodes.OK).json(result.rows);
 };
 
-module.exports = { getOrders };
+const editOrder = async (req, res) => {
+  const { status } = req.query;
+  const { id } = req.params;
+
+  if (!status || !id) {
+    throw new BadRequestError("Status and id are required");
+  }
+
+  const result = await pool.query(
+    "UPDATE orders SET order_status = $1 WHERE order_id = $2 RETURNING *",
+    [status, id]
+  );
+
+  res.status(StatusCodes.OK).json(result.rows[0]);
+};
+
+
+
+module.exports = { getOrders, editOrder };
