@@ -48,66 +48,33 @@ const updateAccount = async (req, res) => {
   res.status(StatusCodes.OK).json({ message: "Account updated successfully" });
 };
 
-const addToWishlist = async (req, res) => {
-  const { product_id } = req.body;
+const addOrder = async (req, res) => {
+  const { user_id, product_id, quantity, address, name, phone } =
+    req.body;
 
-  const product = await pool.query(
-    "SELECT * FROM wishlist WHERE product_id = $1",
-    [product_id]
-  );
-
-  if (product.rows.length !== 0) {
-    throw new UserError("product already added!");
+  // Validate required fields
+  if (!user_id || !product_id || !quantity || !address || !name || !phone) {
+    return res.status(400).json({ error: "Missing required fields" });
   }
 
   const result = await pool.query(
-    "INSERT INTO wishlist (product_id) VALUES ($1) RETURNING *",
-    [product_id]
+    `INSERT INTO orders (user_id, product_id, quantity, address, name, phone)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+    [
+      user_id,
+      product_id,
+      quantity,
+      address,
+      name,
+      phone,
+    ]
   );
 
-  res.status(StatusCodes.CREATED).json(result.rows[0]);
-};
-
-const getWishlist = async (req, res) => {
-  const query = `
-      SELECT p.product_id, p.name, p.price, p.imageurl, p.isavailable
-      FROM wishlist w
-      JOIN products p ON w.product_id = p.product_id;
-    `;
-
-  const result = await pool.query(query);
-
-  if (result.rows.length === 0) {
-    throw new NotFoundError("no products found");
-  }
-
-  res.status(200).json(result.rows);
-};
-
-const deleteWishlist = async (req, res) => {
-  const { id } = req.params;
-
-  const product = await pool.query(
-    "SELECT * FROM wishlist WHERE product_id = $1",
-    [id]
-  );
-
-  if (product.rows.length === 0) {
-    throw new NotFoundError("No products found");
-  }
-
-  const deleteProduct = await pool.query(
-    "DELETE FROM wishlist WHERE product_id = $1 RETURNING *",
-    [id]
-  );
-
-  res.status(200).json({deleted:true});
+  res.status(201).json(result.rows[0]);
 };
 
 module.exports = {
   getAccount,
   updateAccount,
-  addToWishlist,
-  getWishlist,
-  deleteWishlist,
+  addOrder,
 };

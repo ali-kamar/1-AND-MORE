@@ -26,7 +26,7 @@ CREATE TABLE Categories (
 
 
 CREATE TABLE orders (
-    order_id UUID PRIMARY KEY,
+    order_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL,
     product_id UUID NOT NULL,
     quantity INT NOT NULL,
