@@ -16,7 +16,7 @@ const {
   getAllCategories,
 } = require("../controllers/category");
 
-const { getOrders, editOrder } = require("../controllers/orders");
+const { getOrders, editOrder, deleteOrder } = require("../controllers/orders");
 
 router.route("/category/add-category").post(addCategory);
 router.route("/category/").get(getAllCategories);
@@ -28,6 +28,6 @@ router.route("/product/add-product").post(addProduct);
 router.route("/product/edit-product/:id").patch(editProduct);
 
 router.route("/orders").get(getOrders);
-router.route("/orders/:id").post(editOrder);
+router.route("/orders/:id").patch(editOrder).delete(deleteOrder);
 
 module.exports = router;

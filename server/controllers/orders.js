@@ -22,7 +22,7 @@ const getOrders = async (req, res) => {
 };
 
 const editOrder = async (req, res) => {
-  const { status } = req.query;
+  const { status } = req.body;
   const { id } = req.params;
 
   if (!status || !id) {
@@ -37,6 +37,19 @@ const editOrder = async (req, res) => {
   res.status(StatusCodes.OK).json(result.rows[0]);
 };
 
+const deleteOrder = async (req, res) => {
+  const { id } = req.params;
 
+  if (!id) {
+    throw new BadRequestError("Status and id are required");
+  }
 
-module.exports = { getOrders, editOrder };
+  const result = await pool.query(
+    "DELETE FROM orders WHERE order_id = $1 RETURNING *",
+    [id]
+  );
+
+  res.status(StatusCodes.OK).json(result.rows[0]);
+};
+
+module.exports = { getOrders, editOrder, deleteOrder };
