@@ -65,9 +65,7 @@ const addToWishlist = async (req, res) => {
     [product_id]
   );
 
-  res.status(StatusCodes.CREATED).json({
-    wishlistItem: result.rows[0],
-  });
+  res.status(StatusCodes.CREATED).json(result.rows[0]);
 };
 
 const getWishlist = async (req, res) => {
@@ -86,4 +84,30 @@ const getWishlist = async (req, res) => {
   res.status(200).json(result.rows);
 };
 
-module.exports = { getAccount, updateAccount, addToWishlist, getWishlist };
+const deleteWishlist = async (req, res) => {
+  const { id } = req.params;
+
+  const product = await pool.query(
+    "SELECT * FROM wishlist WHERE product_id = $1",
+    [id]
+  );
+
+  if (product.rows.length === 0) {
+    throw new NotFoundError("No products found");
+  }
+
+  const deleteProduct = await pool.query(
+    "DELETE FROM wishlist WHERE product_id = $1 RETURNING *",
+    [id]
+  );
+
+  res.status(200).json({deleted:true});
+};
+
+module.exports = {
+  getAccount,
+  updateAccount,
+  addToWishlist,
+  getWishlist,
+  deleteWishlist,
+};
