@@ -54,7 +54,7 @@ const addOrder = async (req, res) => {
 
   // Validate required fields
   if (!user_id || !product_id || !quantity || !address || !name || !phone) {
-    return res.status(400).json({ error: "Missing required fields" });
+    throw new BadRequestError("Missing required fields");
   }
 
   const result = await pool.query(
@@ -70,11 +70,34 @@ const addOrder = async (req, res) => {
     ]
   );
 
-  res.status(201).json(result.rows[0]);
+  res.status(StatusCodes.CREATED).json(result.rows[0]);
 };
+
+const getOrders = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.query;
+
+  if (!id || !status) {
+    throw new BadRequestError("User ID and status are required");
+  }
+
+    const result = await pool.query(
+      `SELECT * FROM orders WHERE user_id = $1 AND order_status = $2`,
+      [id, status]
+    );
+
+    if (result.rows.length === 0) {
+      throw new NotFoundError("No orders found")
+    }
+
+    res.status(StatusCodes.OK).json(result.rows);
+
+};
+
 
 module.exports = {
   getAccount,
   updateAccount,
   addOrder,
+  getOrders,
 };

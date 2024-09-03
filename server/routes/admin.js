@@ -16,6 +16,8 @@ const {
   getAllCategories,
 } = require("../controllers/category");
 
+const {getOrders} = require('../controllers/orders')
+
 router.route("/category/add-category").post(addCategory);
 router.route("/category/").get(getAllCategories);
 router.route("/category/:id").patch(editCategory).delete(deleteCategory);
@@ -24,5 +26,7 @@ router.route("/product/").get(getAllProducts);
 router.route("/product/:id").get(getProduct).delete(deleteProduct);
 router.route("/product/add-product").post(addProduct);
 router.route("/product/edit-product/:id").patch(editProduct);
+
+router.route("/orders").get(getOrders);
 
 module.exports = router;
