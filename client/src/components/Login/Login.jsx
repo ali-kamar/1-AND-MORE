@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { useNotification } from "../../contexts/Notification/NotificationProvider";
+import Notification from "../Notification/Notification";
 
 const Login = () => {
+  const { isOpen, notification, showNotification } = useNotification();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
 
     try {
       const response = await axios.post("/auth/login", { email, password });
@@ -23,10 +26,10 @@ const Login = () => {
         wishlist: [], // In case wishlist is not provided, default to an empty array
       };
       localStorage.setItem("user", JSON.stringify(userObject));
-      navigate('/')
+
+      navigate("/");
     } catch (error) {
-      console.error("Error logging in:", error);
-      // Handle error (e.g., show an error message)
+      showNotification("Email or password is incorrect!", "error");
     }
   };
 
@@ -87,6 +90,9 @@ const Login = () => {
           </a>
         </p>
       </div>
+      {isOpen && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
     </div>
   );
 };

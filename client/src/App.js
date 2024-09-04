@@ -17,30 +17,33 @@ import AddProductsPage from "./pages/Admin/AddProductsPage";
 
 //Context
 import { FilterProvider } from "./contexts/Filter/FilterProvider";
+import { NotificationProvider } from "./contexts/Notification/NotificationProvider";
 
 function App() {
   return (
-    <FilterProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/whishlist" element={<WhishlistPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/product" element={<ViewProductPage />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/admin/add-category" element={<AddCategoryPage />} />
-          <Route path="/admin/account" element={<AdminAccountPage />} />
-          <Route path="/admin/orders" element={<OrdersPage />} />
-          <Route path="/admin/add-product" element={<AddProductsPage />} />
-          <Route path="/orders" element={<OrdersUser />} />
-        </Routes>
-      </Router>
-    </FilterProvider>
+    <NotificationProvider>
+      <FilterProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/whishlist" element={<WhishlistPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/product" element={<ViewProductPage />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin/add-category" element={<AddCategoryPage />} />
+            <Route path="/admin/account" element={<AdminAccountPage />} />
+            <Route path="/admin/orders" element={<OrdersPage />} />
+            <Route path="/admin/add-product" element={<AddProductsPage />} />
+            <Route path="/orders" element={<OrdersUser />} />
+          </Routes>
+        </Router>
+      </FilterProvider>
+    </NotificationProvider>
   );
 }
 
