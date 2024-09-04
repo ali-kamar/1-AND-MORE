@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CartProduct from "../../components/Cart/CartProduct/CartProduct";
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
 import Contact from "../../components/Contact/Contact";
 import CartSummary from "../../components/Cart/CartSummary/CartSummary";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [isCheckout, setCheckout] = useState(false);
   const closeCheckout = () => {
     setCheckout(false)
   }
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  });
 
   return (
     <>
