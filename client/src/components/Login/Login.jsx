@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,7 +15,15 @@ const Login = () => {
 
       // Assuming the token is returned in the response data
       localStorage.setItem("token", response.data.token);
-      console.log(response.data);
+
+      const userObject = {
+        user_id: response.data.user_id,
+        role: response.data.role,
+        cart: [], // In case cart is not provided, default to an empty array
+        wishlist: [], // In case wishlist is not provided, default to an empty array
+      };
+      localStorage.setItem("user", JSON.stringify(userObject));
+      navigate('/')
     } catch (error) {
       console.error("Error logging in:", error);
       // Handle error (e.g., show an error message)
