@@ -1,7 +1,7 @@
 const pool = require("../db/connect");
 const { StatusCodes } = require("http-status-codes");
 const bcrypt = require("bcrypt");
-const { UserError, UnauthenticatedError } = require("../errors");
+const { UserError, UnauthenticatedError, CustomAPIError } = require("../errors");
 const jwtGenerator = require("../utils/jwtGenerator");
 
 const register = async (req, res) => {
@@ -13,6 +13,10 @@ const register = async (req, res) => {
 
   if (user.rows.length !== 0) {
     throw new UserError("user already exists");
+  }
+
+  if(password.length < 6){
+throw new CustomAPIError("Password must be more than 6 digits")
   }
 
   const saltRound = 10;
