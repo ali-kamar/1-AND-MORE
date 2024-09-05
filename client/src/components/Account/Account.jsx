@@ -3,6 +3,7 @@ import axios from "../../api/axios";
 import Notification from "../Notification/Notification";
 import { useNotification } from "../../contexts/Notification/NotificationProvider";
 import { useNavigate } from "react-router-dom";
+import { useLoader } from "../../contexts/Loader/LoaderProvider";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -12,10 +13,13 @@ const Account = () => {
     }
   }, [navigate]);
 
+  const { showLoader, hideLoader } = useLoader();
   const { isOpen, notification, showNotification } = useNotification();
   useEffect(() => {
+
     const fetchAccount = async () => {
       try {
+        showLoader()
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) {
           const { user_id } = user;
@@ -26,7 +30,7 @@ const Account = () => {
             setPrevEmail(data.email);
             setName(data.name);
           }
-          console.log(data);
+        
         } else {
           // Redirect to login if user is not found
           navigate("/login");
@@ -34,14 +38,18 @@ const Account = () => {
       } catch (error) {
         console.log(error);
       }
+      finally{
+        hideLoader()
+      }
     };
     fetchAccount();
-  }, [navigate]);
+  },[navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      showLoader()
       if (prevEmail === email) {
         const { data } = await axios.patch(`user/account/${id}`, { name });
         if (data) {
@@ -57,7 +65,10 @@ const Account = () => {
         }
       }
     } catch (error) {
-      console.log(error);
+      showNotification(error.response.data.message, "error");
+    }
+    finally{
+      hideLoader()
     }
   };
 
@@ -114,7 +125,7 @@ const Account = () => {
               onClick={() => {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
-                navigate("/login");
+                navigate("/");
               }}
             >
               Logout
