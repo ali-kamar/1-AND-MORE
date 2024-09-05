@@ -3,7 +3,7 @@ import about from "../../assets/images/about.jpg";
 
 const About = () => {
   return (
-    <div class="container mb-24">
+    <div className="container mb-24">
       <h2 className="text-5xl text-center pb-24">About Us</h2>
       <div className="flex justify-between xs:flex-col md:flex-row">
         <div className=" bg-primary rounded p-5 flex items-center">
