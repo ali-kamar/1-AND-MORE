@@ -2,29 +2,41 @@ import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import Notification from "../Notification/Notification";
 import { useNotification } from "../../contexts/Notification/NotificationProvider";
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   const { isOpen, notification, showNotification } = useNotification();
   useEffect(() => {
     const fetchAccount = async () => {
       try {
         const user = JSON.parse(localStorage.getItem("user"));
-
-        const { user_id } = user;
-        setId(user_id);
-        const { data } = await axios.get(`user/account/${user_id}`);
-        if (data) {
-          setEmail(data.email);
-          setPrevEmail(data.email);
-          setName(data.name);
+        if (user) {
+          const { user_id } = user;
+          setId(user_id);
+          const { data } = await axios.get(`user/account/${user_id}`);
+          if (data) {
+            setEmail(data.email);
+            setPrevEmail(data.email);
+            setName(data.name);
+          }
+          console.log(data);
+        } else {
+          // Redirect to login if user is not found
+          navigate("/login");
         }
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchAccount();
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +45,7 @@ const Account = () => {
       if (prevEmail === email) {
         const { data } = await axios.patch(`user/account/${id}`, { name });
         if (data) {
-           showNotification("Account Updated Successfully!", "success");
+          showNotification("Account Updated Successfully!", "success");
         }
       } else {
         const { data } = await axios.patch(`user/account/${id}`, {
@@ -83,7 +95,7 @@ const Account = () => {
                 onChange={(e) => setName(e.target.value)}
                 type="text"
                 name="name"
-                id="password"
+                id="name"
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                 placeholder=""
               />
@@ -97,8 +109,13 @@ const Account = () => {
               Save
             </button>
             <button
-              type="submit"
+              type="button" // Changed to button to avoid form submission
               className="mt-2 block w-full py-2 text-center text-white bg-black border hover:border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+              onClick={() => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                navigate("/login");
+              }}
             >
               Logout
             </button>

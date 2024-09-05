@@ -6,6 +6,7 @@ import Notification from "../Notification/Notification";
 import { useLoader } from "../../contexts/Loader/LoaderProvider";
 
 const Login = () => {
+  
   const { isOpen, notification, showNotification } = useNotification();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
