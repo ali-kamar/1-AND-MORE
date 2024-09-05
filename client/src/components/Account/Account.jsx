@@ -65,7 +65,7 @@ const Account = () => {
         }
       }
     } catch (error) {
-      showNotification(error.response.data.message, "error");
+      showNotification(error.response.data.msg, "error");
     }
     finally{
       hideLoader()

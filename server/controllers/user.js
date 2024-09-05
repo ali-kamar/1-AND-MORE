@@ -17,7 +17,10 @@ const updateAccount = async (req, res) => {
   const userId = req.params.id;
   const { email, name } = req.body;
 
-  try {
+  if(!email || !name || !userId){
+    throw new BadRequestError("Missing values")
+  }
+
     const fields = [];
     const values = [];
 
@@ -28,7 +31,7 @@ const updateAccount = async (req, res) => {
         [email]
       );
       if (user.rows.length !== 0) {
-        return res.status(400).json({ message: "Email already exists" });
+        throw new UserError("Email already exists");
       }
       fields.push("user_email = $" + (fields.length + 1));
       values.push(email);
@@ -56,10 +59,7 @@ const updateAccount = async (req, res) => {
 
     // Return success response
     res.status(StatusCodes.OK).json(acc.rows[0]);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
+  
 };
 
 
