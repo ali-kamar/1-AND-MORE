@@ -17,36 +17,51 @@ const updateAccount = async (req, res) => {
   const userId = req.params.id;
   const { email, name } = req.body;
 
-  const fields = [];
-  const values = [];
+  try {
+    const fields = [];
+    const values = [];
 
-  if (email) {
-    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
-      email,
-    ]);
-    if (user.rows.length !== 0) throw new UserError("email already exists");
-    fields.push("user_email = $1");
-    values.push(email);
+    // Check for email and ensure it's unique
+    if (email) {
+      const user = await pool.query(
+        "SELECT * FROM users WHERE user_email = $1",
+        [email]
+      );
+      if (user.rows.length !== 0) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+      fields.push("user_email = $" + (fields.length + 1));
+      values.push(email);
+    }
+
+    // Check for name
+    if (name) {
+      fields.push("user_name = $" + (fields.length + 1));
+      values.push(name);
+    }
+
+    // If no fields to update, throw an error
+    if (fields.length === 0) {
+      return res.status(400).json({ message: "No data provided to update" });
+    }
+
+    // Add userId as the last parameter
+    values.push(userId);
+    const query = `UPDATE users SET ${fields.join(", ")} WHERE user_id = $${
+      values.length
+    } RETURNING *`;
+
+    // Execute the update query
+    const acc = await pool.query(query, values);
+
+    // Return success response
+    res.status(StatusCodes.OK).json(acc.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
-  if (name) {
-    fields.push("user_name = $2");
-    values.push(name);
-  }
-
-  if (fields.length === 0) {
-    throw new BadRequestError("No data provided to update");
-  }
-
-  // Add userId as the last parameter
-  values.push(userId);
-
-  // Construct and execute the dynamic query
-  const query = `UPDATE users SET ${fields.join(", ")} WHERE user_id = $3`;
-  const newUser = await pool.query(query, values);
-
-  // Return success response
-  res.status(StatusCodes.OK).json({ message: "Account updated successfully" });
 };
+
 
 const addOrder = async (req, res) => {
   const { user_id, product_id, quantity, address, name, phone } =

@@ -3,17 +3,20 @@ import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../contexts/Notification/NotificationProvider";
 import Notification from "../Notification/Notification";
+import { useLoader } from "../../contexts/Loader/LoaderProvider";
 
 const Login = () => {
   const { isOpen, notification, showNotification } = useNotification();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { showLoader, hideLoader } = useLoader();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      showLoader();
       const response = await axios.post("/auth/login", { email, password });
 
       // Assuming the token is returned in the response data
@@ -30,6 +33,9 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       showNotification("Email or password is incorrect!", "error");
+    }
+    finally{
+      hideLoader();
     }
   };
 
