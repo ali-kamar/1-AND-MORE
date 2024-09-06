@@ -1,36 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Searchbar from "./Searchbar";
-import Logo from "../../assets/images/logo.JPG";
+import { useProduct } from "../../contexts/Product/ProductProvider";
 
 const Products = () => {
+  const { products, error } = useProduct();
+  const [priceMap, setPriceMap] = useState({});
+
+  useEffect(() => {
+    // Update new prices after products are fetched
+    const newPriceMap = {};
+    products.forEach((product) => {
+      let discount = product.price;
+      if (product.offertype) {
+        discount = product.price * (1 - product.offertype / 100);
+        newPriceMap[product.product_id] = discount.toFixed(2);
+      }
+    });
+    setPriceMap(newPriceMap);
+  }, [products]);
 
   return (
     <div className="my-10">
       <Searchbar />
 
-      <div class="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">
-        <div class="bg-white shadow rounded overflow-hidden group">
-          <div class="relative">
-            <img src={Logo} alt="product 1" class="w-full" />
-          </div>
-          <div class="pt-4 pb-3 px-4">
-            <a href="/product">
-              <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                Guyer Chair
-              </h4>
-            </a>
-            <div class="flex items-baseline mb-1 space-x-2">
-              <p class="text-xl text-primary font-semibold">$45.00</p>
-              <p class="text-sm text-gray-400 line-through">$55.90</p>
-            </div>
-          </div>
-          <a
-            href="/product"
-            class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">
+        {products.map((product) => (
+          <div
+            key={product.product_id}
+            className="bg-white shadow rounded overflow-hidden group"
           >
-            View
-          </a>
-        </div>
+            <div className="relative">
+              <img
+                src={product.imageurl}
+                alt={product.name}
+                className="w-full"
+              />
+            </div>
+            <div className="pt-4 pb-3 px-4">
+              <a href={`/product/${product.product_id}`}>
+                <h4 className="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
+                  {product.name}
+                </h4>
+              </a>
+              <div className="flex items-baseline mb-1 space-x-2">
+                <p className="text-xl text-primary font-semibold">
+                  ${priceMap[product.product_id] || product.price}
+                </p>
+                {product.offertype && (
+                  <p className="text-sm text-gray-400 line-through">
+                    ${product.price}
+                  </p>
+                )}
+              </div>
+            </div>
+            <a
+              href={`/product/${product.product_id}`}
+              className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
+            >
+              View
+            </a>
+          </div>
+        ))}
       </div>
     </div>
   );

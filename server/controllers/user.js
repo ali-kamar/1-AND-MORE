@@ -17,55 +17,47 @@ const updateAccount = async (req, res) => {
   const userId = req.params.id;
   const { email, name } = req.body;
 
-  if(!email || !name || !userId){
-    throw new BadRequestError("Missing values")
+  const fields = [];
+  const values = [];
+
+  // Check for email and ensure it's unique
+  if (email) {
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
+      email,
+    ]);
+    if (user.rows.length !== 0) {
+      throw new UserError("Email already exists");
+    }
+    fields.push("user_email = $" + (fields.length + 1));
+    values.push(email);
   }
 
-    const fields = [];
-    const values = [];
+  // Check for name
+  if (name) {
+    fields.push("user_name = $" + (fields.length + 1));
+    values.push(name);
+  }
 
-    // Check for email and ensure it's unique
-    if (email) {
-      const user = await pool.query(
-        "SELECT * FROM users WHERE user_email = $1",
-        [email]
-      );
-      if (user.rows.length !== 0) {
-        throw new UserError("Email already exists");
-      }
-      fields.push("user_email = $" + (fields.length + 1));
-      values.push(email);
-    }
+  // If no fields to update, throw an error
+  if (fields.length === 0) {
+    return res.status(400).json({ message: "No data provided to update" });
+  }
 
-    // Check for name
-    if (name) {
-      fields.push("user_name = $" + (fields.length + 1));
-      values.push(name);
-    }
+  // Add userId as the last parameter
+  values.push(userId);
+  const query = `UPDATE users SET ${fields.join(", ")} WHERE user_id = $${
+    values.length
+  } RETURNING *`;
 
-    // If no fields to update, throw an error
-    if (fields.length === 0) {
-      return res.status(400).json({ message: "No data provided to update" });
-    }
+  // Execute the update query
+  const acc = await pool.query(query, values);
 
-    // Add userId as the last parameter
-    values.push(userId);
-    const query = `UPDATE users SET ${fields.join(", ")} WHERE user_id = $${
-      values.length
-    } RETURNING *`;
-
-    // Execute the update query
-    const acc = await pool.query(query, values);
-
-    // Return success response
-    res.status(StatusCodes.OK).json(acc.rows[0]);
-  
+  // Return success response
+  res.status(StatusCodes.OK).json(acc.rows[0]);
 };
 
-
 const addOrder = async (req, res) => {
-  const { user_id, product_id, quantity, address, name, phone } =
-    req.body;
+  const { user_id, product_id, quantity, address, name, phone } = req.body;
 
   // Validate required fields
   if (!user_id || !product_id || !quantity || !address || !name || !phone) {
@@ -75,14 +67,7 @@ const addOrder = async (req, res) => {
   const result = await pool.query(
     `INSERT INTO orders (user_id, product_id, quantity, address, name, phone)
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [
-      user_id,
-      product_id,
-      quantity,
-      address,
-      name,
-      phone,
-    ]
+    [user_id, product_id, quantity, address, name, phone]
   );
 
   res.status(StatusCodes.CREATED).json(result.rows[0]);
@@ -96,19 +81,17 @@ const getOrders = async (req, res) => {
     throw new BadRequestError("User ID and status are required");
   }
 
-    const result = await pool.query(
-      `SELECT * FROM orders WHERE user_id = $1 AND order_status = $2`,
-      [id, status]
-    );
+  const result = await pool.query(
+    `SELECT * FROM orders WHERE user_id = $1 AND order_status = $2`,
+    [id, status]
+  );
 
-    if (result.rows.length === 0) {
-      throw new NotFoundError("No orders found")
-    }
+  if (result.rows.length === 0) {
+    throw new NotFoundError("No orders found");
+  }
 
-    res.status(StatusCodes.OK).json(result.rows);
-
+  res.status(StatusCodes.OK).json(result.rows);
 };
-
 
 module.exports = {
   getAccount,

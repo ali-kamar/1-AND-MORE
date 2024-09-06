@@ -4,7 +4,6 @@ import Loader from "../../components/Loader/Loader";
 
 const LoaderContext = createContext();
 
-export const useLoader = () => useContext(LoaderContext);
 
 export const LoaderProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -19,3 +18,6 @@ export const LoaderProvider = ({ children }) => {
     </LoaderContext.Provider>
   );
 };
+
+
+export const useLoader = () => useContext(LoaderContext);

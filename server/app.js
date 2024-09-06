@@ -38,7 +38,7 @@ app.use(xss());
 app.use("/api/v1/auth", authenticationRouter);
 app.use("/api/v1/user", authenticate, userRouter);
 app.use("/api/v1/admin", authenticate, adminRouter);
-app.use("/api/v1/global", authenticate, globalRouter);
+app.use("/api/v1/global", globalRouter);
 
 // app.get('/', (req, res) => {
 //   res.send('<h1>Todo-List</h1>');
