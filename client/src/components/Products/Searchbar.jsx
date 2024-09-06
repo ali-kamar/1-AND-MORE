@@ -4,7 +4,7 @@ import { useFilter } from '../../contexts/Filter/FilterProvider';
 const Searchbar = () => {
   const { toggleFilter} = useFilter()
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center my-10">
       <div className="w-full lg:max-w-xl relative flex md:max-w-md xs:max-w-sm">
         <span className="mt-3 mr-3 cursor-pointer " title="Reset All Filters">
           <svg

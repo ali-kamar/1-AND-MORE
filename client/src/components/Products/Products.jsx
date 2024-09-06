@@ -1,27 +1,40 @@
+// src/components/Products.jsx
 import React, { useState, useEffect } from "react";
 import Searchbar from "./Searchbar";
 import { useProduct } from "../../contexts/Product/ProductProvider";
+import OfferCarousel from "./OfferCarousel";
 
 const Products = () => {
   const { products, error } = useProduct();
   const [priceMap, setPriceMap] = useState({});
+  const [offerProducts, setOfferProducts] = useState([]);
 
   useEffect(() => {
     // Update new prices after products are fetched
     const newPriceMap = {};
+    const offers = [];
+
     products.forEach((product) => {
       let discount = product.price;
       if (product.offertype) {
         discount = product.price * (1 - product.offertype / 100);
         newPriceMap[product.product_id] = discount.toFixed(2);
+        offers.push({
+          ...product,
+          discountedPrice: discount.toFixed(2),
+        });
       }
     });
+
     setPriceMap(newPriceMap);
+    setOfferProducts(offers);
   }, [products]);
 
   return (
     <div className="my-10">
+      <OfferCarousel offers={offerProducts} />
       <Searchbar />
+
 
       <div className="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">
         {products.map((product) => (
