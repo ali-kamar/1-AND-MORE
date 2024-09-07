@@ -20,42 +20,45 @@ import { FilterProvider } from "./contexts/Filter/FilterProvider";
 import { NotificationProvider } from "./contexts/Notification/NotificationProvider";
 import { LoaderProvider } from "./contexts/Loader/LoaderProvider";
 import { ProductProvider } from "./contexts/Product/ProductProvider";
+import { CategoriesProvider } from "./contexts/Categories/CategoriesProvider";
 
 function App() {
   return (
-    <ProductProvider>
-      <LoaderProvider>
-        <NotificationProvider>
-          <FilterProvider>
-            <Router>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/whishlist" element={<WhishlistPage />} />
-                <Route path="/account" element={<AccountPage />} />
-                <Route path="/shop" element={<ShopPage />} />
-                <Route path="/product/:id" element={<ViewProductPage />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route
-                  path="/admin/add-category"
-                  element={<AddCategoryPage />}
-                />
-                <Route path="/admin/account" element={<AdminAccountPage />} />
-                <Route path="/admin/orders" element={<OrdersPage />} />
-                <Route
-                  path="/admin/add-product"
-                  element={<AddProductsPage />}
-                />
-                <Route path="/orders" element={<OrdersUser />} />
-              </Routes>
-            </Router>
-          </FilterProvider>
-        </NotificationProvider>
-      </LoaderProvider>
-    </ProductProvider>
+    <LoaderProvider>
+      <CategoriesProvider>
+        <ProductProvider>
+          <NotificationProvider>
+            <FilterProvider>
+              <Router>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/whishlist" element={<WhishlistPage />} />
+                  <Route path="/account" element={<AccountPage />} />
+                  <Route path="/shop" element={<ShopPage />} />
+                  <Route path="/product/:id" element={<ViewProductPage />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route
+                    path="/admin/add-category"
+                    element={<AddCategoryPage />}
+                  />
+                  <Route path="/admin/account" element={<AdminAccountPage />} />
+                  <Route path="/admin/orders" element={<OrdersPage />} />
+                  <Route
+                    path="/admin/add-product"
+                    element={<AddProductsPage />}
+                  />
+                  <Route path="/orders" element={<OrdersUser />} />
+                </Routes>
+              </Router>
+            </FilterProvider>
+          </NotificationProvider>
+        </ProductProvider>
+      </CategoriesProvider>
+    </LoaderProvider>
   );
 }
 
