@@ -6,7 +6,6 @@ import Notification from "../Notification/Notification";
 import { useLoader } from "../../contexts/Loader/LoaderProvider";
 
 const Login = () => {
-  
   const { isOpen, notification, showNotification } = useNotification();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -34,8 +33,7 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       showNotification("Email or password is incorrect!", "error");
-    }
-    finally{
+    } finally {
       hideLoader();
     }
   };
@@ -75,11 +73,6 @@ const Login = () => {
                 required
               />
             </div>
-          </div>
-          <div className="flex items-center mt-6">
-            <a href="#" className="text-primary">
-              Forgot password
-            </a>
           </div>
           <div className="mt-4">
             <button

@@ -36,7 +36,7 @@ function App() {
                 <Route path="/whishlist" element={<WhishlistPage />} />
                 <Route path="/account" element={<AccountPage />} />
                 <Route path="/shop" element={<ShopPage />} />
-                <Route path="/product" element={<ViewProductPage />} />
+                <Route path="/product/:id" element={<ViewProductPage />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route
