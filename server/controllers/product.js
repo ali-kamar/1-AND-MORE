@@ -120,14 +120,24 @@ const editProduct = async (req, res) => {
   const { name, description, price, imageURL, category, isAvailable, offer } =
     req.body;
 
-
-    
   if (!id) {
     throw new BadRequestError("Product ID is required");
   }
 
-  if (!name || !price || !imageURL || !category) {
-    throw new BadRequestError("Missing values");
+  // if (!name || !price || !imageURL || !category) {
+  //   throw new BadRequestError("Missing values");
+  // }
+  if (!name) {
+    throw new BadRequestError("Missing name");
+  }
+  if (!price) {
+    throw new BadRequestError("Missing price");
+  }
+  if (!imageURL) {
+    throw new BadRequestError("Missing imageURL");
+  }
+  if (!category) {
+    throw new BadRequestError("Missing category");
   }
 
   const fields = [];
@@ -166,8 +176,6 @@ const editProduct = async (req, res) => {
   if (fields.length === 0) {
     throw new BadRequestError("No fields provided for update");
   }
-
-  
 
   // Construct the query string
   const querySet = fields
