@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Widget } from "@uploadcare/react-widget";
 import { useCategory } from "../../contexts/Categories/CategoriesProvider";
 import axios from "../../api/axios";
+import Notification from "../Notification/Notification";
+import { useNotification } from "../../contexts/Notification/NotificationProvider";
 
 const EditProducts = ({ product, setEdit }) => {
   const [name, setName] = useState(product?.name || "");
@@ -16,6 +18,11 @@ const EditProducts = ({ product, setEdit }) => {
   const [offer, setOffer] = useState(product?.offer || "");
   const navigate = useNavigate();
   const { categories } = useCategory();
+  const { isOpen, notification, showNotification } = useNotification();
+
+  // Calculate the new price if the offer is applied
+  // const newPrice = price - (price * (offer / 100));
+ // Default to original price if no offer
 
   const handleImageChange = (fileInfo) => {
     if (fileInfo) {
@@ -27,8 +34,7 @@ const EditProducts = ({ product, setEdit }) => {
     e.preventDefault();
     try {
       console.log(imageURL);
-      
-      
+
       await axios.patch(`admin/product/edit-product/${product.product_id}`, {
         name,
         description,
@@ -39,8 +45,10 @@ const EditProducts = ({ product, setEdit }) => {
         offer,
       });
       setEdit(false);
+      showNotification("Edit success!", "success");
+      window.location.reload();
     } catch (err) {
-      console.log(err);
+      showNotification(err.response.data.msg, "error");
     }
   };
 
@@ -110,7 +118,7 @@ const EditProducts = ({ product, setEdit }) => {
               className="block text-black text-sm font-bold mb-2"
               htmlFor="offer"
             >
-              Offer:
+              Offer (%):
             </label>
             <input
               id="offer"
@@ -118,9 +126,16 @@ const EditProducts = ({ product, setEdit }) => {
               value={offer}
               onChange={(e) => setOffer(e.target.value)}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Enter offer (optional)"
+              placeholder="Enter offer percentage (optional)"
             />
           </div>
+
+          {/* Display New Price if Offer is Applied */}
+          {offer > 0 && (
+            <p className="text-red-500 font-semibold">
+              New Price: ${(price - price * (offer / 100)).toFixed(2)}
+            </p>
+          )}
 
           {/* Image Upload Field */}
           <div className="mb-4">
@@ -186,6 +201,9 @@ const EditProducts = ({ product, setEdit }) => {
           </div>
         </form>
       </div>
+      {isOpen && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
     </div>
   );
 };

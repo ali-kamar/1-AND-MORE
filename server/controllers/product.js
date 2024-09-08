@@ -124,21 +124,10 @@ const editProduct = async (req, res) => {
     throw new BadRequestError("Product ID is required");
   }
 
-  // if (!name || !price || !imageURL || !category) {
-  //   throw new BadRequestError("Missing values");
-  // }
-  if (!name) {
-    throw new BadRequestError("Missing name");
+  if (!name || !price || !imageURL || !category) {
+    throw new BadRequestError("Missing values");
   }
-  if (!price) {
-    throw new BadRequestError("Missing price");
-  }
-  if (!imageURL) {
-    throw new BadRequestError("Missing imageURL");
-  }
-  if (!category) {
-    throw new BadRequestError("Missing category");
-  }
+  
 
   const fields = [];
   const values = [];
