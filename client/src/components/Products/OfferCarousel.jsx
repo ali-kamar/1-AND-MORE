@@ -38,7 +38,7 @@ const OfferCarousel = ({ offers }) => {
                 className="w-full h-40 object-cover mb-4"
               />
             </div>
-            <h3 className="text-lg font-semibold">{offer.name}</h3>
+            <h3 className="text-lg font-semibold capitalize">{offer.name}</h3>
             <p className="text-xl text-primary font-semibold">
               ${offer.discountedPrice}
             </p>

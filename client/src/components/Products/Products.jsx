@@ -17,7 +17,8 @@ const Products = () => {
     products.forEach((product) => {
       let discount = product.price;
       if (product.offertype) {
-        discount = product.price * (1 - product.offertype / 100);
+        discount = product.price - product.price * (product.offertype / 100);
+
         newPriceMap[product.product_id] = discount.toFixed(2);
         offers.push({
           ...product,
@@ -35,7 +36,6 @@ const Products = () => {
       <OfferCarousel offers={offerProducts} />
       <Searchbar />
 
-
       <div className="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">
         {products.map((product) => (
           <div
@@ -51,7 +51,7 @@ const Products = () => {
             </div>
             <div className="pt-4 pb-3 px-4">
               <a href={`/product/${product.product_id}`}>
-                <h4 className="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
+                <h4 className="capitalize font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
                   {product.name}
                 </h4>
               </a>
