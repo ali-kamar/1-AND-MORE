@@ -24,13 +24,19 @@ export const CategoriesProvider = ({ children }) => {
     }
   };
 
+  const removeCategory = (id) => {
+    setCategories((prevCategories) =>
+      prevCategories.filter((category) => category.category_id !== id)
+    );
+  };
+
   // Use effect to fetch products when component mounts
   useEffect(() => {
     fetchCategories();
   }, []);
 
   return (
-    <CategoriesContext.Provider value={{ categories, error }}>
+    <CategoriesContext.Provider value={{ categories, error, removeCategory }}>
       {children}
     </CategoriesContext.Provider>
   );

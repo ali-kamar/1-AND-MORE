@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
-const categories = [
-  { id: 1, name: "Category 1" },
-  { id: 2, name: "Category 2" },
-  { id: 3, name: "Category 3" },
-];
+import { useCategory } from "../../contexts/Categories/CategoriesProvider";
+import axios from "../../api/axios";
+import Notification from "../Notification/Notification";
+import { useNotification } from "../../contexts/Notification/NotificationProvider";
 
 const AddCategory = () => {
+  const { categories, removeCategory } = useCategory();
+  const { isOpen, notification, showNotification } = useNotification();
+  const [newCategory, setNewCategory] = useState("")
+
+ 
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(`admin/category/${id}`);
+      if (data) {
+        removeCategory(id);
+        showNotification("Category deleted successfully!", "success");
+      }
+    } catch (error) {
+      showNotification(error.response.data.msg, "error");
+    }
+  };
+
   return (
     <div className="pt-3">
       <h2 className="text-4xl font-semibold text-center my-10">Add Category</h2>
@@ -15,6 +31,8 @@ const AddCategory = () => {
         <div className="w-full lg:max-w-l relative flex md:max-w-md xs:max-w-xs">
           <input
             type="text"
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
             name="add"
             id="add"
             className="w-full border border-primary rounded-none p-3 focus:outline-none"
@@ -31,17 +49,17 @@ const AddCategory = () => {
         <ul className="space-y-2">
           {categories.map((category, index) => (
             <li
-              key={category.id}
+              key={category.category_id}
               className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
             >
               <span className="text-lg font-medium">
-                {index + 1}. {category.name}
+                {index + 1}. {category.category_name}
               </span>
-              <div className="flex space-x-4">
-                <button className="text-blue-500 hover:text-blue-700">
-                  <FaEdit size={20} />
-                </button>
-                <button className="text-red-500 hover:text-red-700">
+              <div className="">
+                <button
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => handleDelete(category.category_id)}
+                >
                   <FaTrash size={20} />
                 </button>
               </div>
@@ -49,6 +67,9 @@ const AddCategory = () => {
           ))}
         </ul>
       </div>
+      {isOpen && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
     </div>
   );
 };
