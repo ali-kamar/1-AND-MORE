@@ -17,6 +17,7 @@ const AddCategory = () => {
       });
       if (data) {
         addCategory(data);
+        setNewCategory("")
         showNotification("Category added successfully!", "success");
       }
     } catch (error) {

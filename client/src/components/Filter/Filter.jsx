@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFilter } from "../../contexts/Filter/FilterProvider";
+import { useCategory } from "../../contexts/Categories/CategoriesProvider";
 
 const Filter = () => {
   const { closeFilter } = useFilter();
+  const { categories } = useCategory();
+  const [selectedCategory, setSelectedCategory] = useState("")
+  console.log(selectedCategory);
+  
+   const handleCategoryClick = (categoryName) => {
+     setSelectedCategory(categoryName);
+   };
   return (
     <div className="max-w-xl w-full bg-black p-10 rounded text-white">
       <h4 className="font-semibold text-lg mb-5 border-b border-primary pb-5">
@@ -11,15 +19,19 @@ const Filter = () => {
       <div className="mb-5">
         <h4 className="mb-2 font-semibold text-lg">Categories:</h4>
         <ul className="flex p-4 list-none flex-wrap rounded gap-4 bg-primary text-black">
-          <li className="bg-white p-2 rounded hover:bg-black transition hover:text-white cursor-pointer">
-            Toys
-          </li>
-          <li className="bg-white p-2 rounded hover:bg-black transition hover:text-white cursor-pointer">
-            Toys
-          </li>
-          <li className="bg-white p-2 rounded hover:bg-black transition hover:text-white cursor-pointer">
-            Home Equipment
-          </li>
+          {categories.map((category) => (
+            <li
+              className={`p-2 rounded cursor-pointer transition ${
+                selectedCategory === category.category_name
+                  ? "bg-black text-white"
+                  : "bg-white hover:bg-black hover:text-white"
+              }`}
+              key={category.category_id}
+              onClick={() => handleCategoryClick(category.category_name)}
+            >
+              {category.category_name}
+            </li>
+          ))}
         </ul>
       </div>
       {/* Sorting */}
