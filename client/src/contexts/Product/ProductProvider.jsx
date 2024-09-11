@@ -23,6 +23,22 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+   const fetchFilteredProducts = async ({
+     category,
+     minPrice,
+     maxPrice,
+     sort,
+   }) => {
+     try {
+       const response = await axios.get("/global/product", {
+         params: { category, minPrice, maxPrice, sort },
+       });
+       setProducts(response.data);
+     } catch (err) {
+       setError(err.response?.data?.msg || "Error fetching products");
+     }
+   };
+
   const removeProduct = (id) => {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.product_id !== id)
@@ -46,7 +62,13 @@ export const ProductProvider = ({ children }) => {
 
   return (
     <ProductContext.Provider
-      value={{ products, error, updateProducts, removeProduct }}
+      value={{
+        products,
+        error,
+        updateProducts,
+        removeProduct,
+        fetchFilteredProducts,
+      }}
     >
       {children}
     </ProductContext.Provider>

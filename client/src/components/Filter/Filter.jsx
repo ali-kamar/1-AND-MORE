@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { useFilter } from "../../contexts/Filter/FilterProvider";
 import { useCategory } from "../../contexts/Categories/CategoriesProvider";
+import { max } from "lodash";
 
 const Filter = () => {
   const { closeFilter } = useFilter();
   const { categories } = useCategory();
-  const [selectedCategory, setSelectedCategory] = useState("")
-  console.log(selectedCategory);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [sort, setSort] = useState("");
   
-   const handleCategoryClick = (categoryName) => {
-     setSelectedCategory(categoryName);
-   };
+
+  const handleCategoryClick = (categoryName) => {
+    setSelectedCategory(categoryName);
+  };
   return (
     <div className="max-w-xl w-full bg-black p-10 rounded text-white">
       <h4 className="font-semibold text-lg mb-5 border-b border-primary pb-5">
@@ -38,16 +42,15 @@ const Filter = () => {
       <div>
         <div className="mb-5">
           <label htmlFor="sort" className="block mb-1">
-            Sort By Price:{" "}
+            Sort By Price:
           </label>
           <select
             name="sort"
             id="sort"
             className="text-black p-2 rounded w-full"
+            onChange={(e) => setSort(e.target.value)}
           >
-            <option value="" disabled>
-              Select
-            </option>
+            <option value="">Select</option>
             <option value="asc">Price: Low To High</option>
             <option value="desc">Price: High To Low</option>
           </select>
@@ -60,6 +63,8 @@ const Filter = () => {
             type="number"
             name="min"
             id="min"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
             className="p-2 rounded text-black w-full"
           />
         </div>
@@ -71,6 +76,8 @@ const Filter = () => {
             type="number"
             name="max"
             id="max"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
             className="p-2 rounded text-black w-full"
           />
         </div>

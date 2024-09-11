@@ -9,6 +9,7 @@ const Products = () => {
   const [priceMap, setPriceMap] = useState({});
   const [offerProducts, setOfferProducts] = useState([]);
 
+
   useEffect(() => {
     // Update new prices after products are fetched
     const newPriceMap = {};
