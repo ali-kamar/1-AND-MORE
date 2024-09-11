@@ -5,6 +5,7 @@ import { useCategory } from "../../contexts/Categories/CategoriesProvider";
 import axios from "../../api/axios";
 import Notification from "../Notification/Notification";
 import { useNotification } from "../../contexts/Notification/NotificationProvider";
+import { useProduct } from "../../contexts/Product/ProductProvider";
 
 const EditProducts = ({ product, setEdit }) => {
   const [name, setName] = useState(product?.name || "");
@@ -19,6 +20,7 @@ const EditProducts = ({ product, setEdit }) => {
   const navigate = useNavigate();
   const { categories } = useCategory();
   const { isOpen, notification, showNotification } = useNotification();
+  const { updateProducts } = useProduct();
 
   // Calculate the new price if the offer is applied
   // const newPrice = price - (price * (offer / 100));
@@ -33,9 +35,9 @@ const EditProducts = ({ product, setEdit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(imageURL);
+      
 
-      await axios.patch(`admin/product/edit-product/${product.product_id}`, {
+      const {data} = await axios.patch(`admin/product/edit-product/${product.product_id}`, {
         name,
         description,
         price,
@@ -44,9 +46,10 @@ const EditProducts = ({ product, setEdit }) => {
         isAvailable,
         offer,
       });
+      updateProducts(data)
       setEdit(false);
       showNotification("Edit success!", "success");
-      window.location.reload();
+      
     } catch (err) {
       showNotification(err.response.data.msg, "error");
     }

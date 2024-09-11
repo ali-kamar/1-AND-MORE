@@ -23,13 +23,23 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+    const updateProducts = (updatedProduct) => {
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.product_id === updatedProduct.product_id
+            ? updatedProduct
+            : product
+        )
+      );
+    };
+
   // Use effect to fetch products when component mounts
   useEffect(() => {
     fetchProducts();
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, error }}>
+    <ProductContext.Provider value={{ products, error, updateProducts }}>
       {children}
     </ProductContext.Provider>
   );
