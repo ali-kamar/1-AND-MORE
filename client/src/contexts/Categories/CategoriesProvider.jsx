@@ -23,6 +23,9 @@ export const CategoriesProvider = ({ children }) => {
         hideLoader()
     }
   };
+  const addCategory = (category) => {
+    setCategories((prevCategories) => [...prevCategories, category]);
+  };
 
   const removeCategory = (id) => {
     setCategories((prevCategories) =>
@@ -36,7 +39,9 @@ export const CategoriesProvider = ({ children }) => {
   }, []);
 
   return (
-    <CategoriesContext.Provider value={{ categories, error, removeCategory }}>
+    <CategoriesContext.Provider
+      value={{ categories, error, removeCategory, addCategory }}
+    >
       {children}
     </CategoriesContext.Provider>
   );

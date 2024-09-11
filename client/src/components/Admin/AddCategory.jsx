@@ -1,16 +1,29 @@
 import React, { useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { useCategory } from "../../contexts/Categories/CategoriesProvider";
 import axios from "../../api/axios";
 import Notification from "../Notification/Notification";
 import { useNotification } from "../../contexts/Notification/NotificationProvider";
 
 const AddCategory = () => {
-  const { categories, removeCategory } = useCategory();
+  const { categories, removeCategory, addCategory } = useCategory();
   const { isOpen, notification, showNotification } = useNotification();
   const [newCategory, setNewCategory] = useState("")
 
- 
+  const handleAdd = async () => {
+    try {
+      const { data } = await axios.post("admin/category/add-category", {
+        categoryName: newCategory,
+      });
+      if (data) {
+        addCategory(data);
+        showNotification("Category added successfully!", "success");
+      }
+    } catch (error) {
+      showNotification(error.response.data.msg, "error");
+    }
+  };
+
 
   const handleDelete = async (id) => {
     try {
@@ -38,7 +51,10 @@ const AddCategory = () => {
             className="w-full border border-primary rounded-none p-3 focus:outline-none"
             placeholder="Add category..."
           />
-          <button className="bg-primary items-center border border-primary text-white xs:px-4 lg:px-8 hover:bg-transparent hover:text-primary transition">
+          <button
+            className="bg-primary items-center border border-primary text-white xs:px-4 lg:px-8 hover:bg-transparent hover:text-primary transition"
+            onClick={handleAdd}
+          >
             Add
           </button>
         </div>
