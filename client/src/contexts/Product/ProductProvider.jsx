@@ -23,6 +23,12 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  const removeProduct = (id) => {
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.product_id !== id)
+    );
+  };
+
     const updateProducts = (updatedProduct) => {
       setProducts((prevProducts) =>
         prevProducts.map((product) =>
@@ -39,7 +45,9 @@ export const ProductProvider = ({ children }) => {
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, error, updateProducts }}>
+    <ProductContext.Provider
+      value={{ products, error, updateProducts, removeProduct }}
+    >
       {children}
     </ProductContext.Provider>
   );

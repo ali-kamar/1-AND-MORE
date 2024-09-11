@@ -2,9 +2,25 @@ import React, { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { AiOutlineEdit } from "react-icons/ai";
 import EditProducts from "./EditProduct";
+import { useProduct } from "../../contexts/Product/ProductProvider";
+import axios from "../../api/axios";
+import { useNotification } from "../../contexts/Notification/NotificationProvider";
+import Notification from "../Notification/Notification";
 
 const ProductsDashboard = ({ product }) => {
+  const { removeProduct } = useProduct();
   const [edit, setEdit] = useState(false);
+  const { isOpen, notification, showNotification } = useNotification();
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(`admin/product/${id}`);
+      if (data) {
+        removeProduct(id)
+        showNotification("Product deleted successfully", "success")
+      }
+    } catch (error) {showNotification(error.response.data.msg, "error");}
+  };
+
   return (
     <tr className="">
       <td className="py-4 px-4 min-w-[200px] border border-black">
@@ -41,16 +57,22 @@ const ProductsDashboard = ({ product }) => {
           >
             <AiOutlineEdit />
           </button>
-          <button className="text-primary hover:text-gray-800 text-2xl">
+          <button
+            className="text-primary hover:text-gray-800 text-2xl"
+            onClick={() => handleDelete(product.product_id)}
+          >
             <FaTrashAlt />
           </button>
         </div>
         {edit && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
-            <EditProducts product={product} setEdit={setEdit}/>
+            <EditProducts product={product} setEdit={setEdit} />
           </div>
         )}
       </td>
+      {isOpen && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
     </tr>
   );
 };
