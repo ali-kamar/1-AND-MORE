@@ -8,22 +8,22 @@ const getAllProducts = async (req, res) => {
   let query = "SELECT * FROM products WHERE 1=1"; // Start with a base query
   const values = [];
 
-  if (category) {
+  if (category && category !== "") {
     query += " AND category = $1";
     values.push(category);
   }
 
-  if (minPrice) {
+  if (minPrice && minPrice !== "") {
     query += ` AND price >= $${values.length + 1}`;
     values.push(minPrice);
   }
 
-  if (maxPrice) {
+  if (maxPrice && maxPrice !== "") {
     query += ` AND price <= $${values.length + 1}`;
     values.push(maxPrice);
   }
 
-  if (sort) {
+  if (sort && sort !== "") {
     if (sort === "asc") {
       query += " ORDER BY price ASC";
     } else if (sort === "desc") {

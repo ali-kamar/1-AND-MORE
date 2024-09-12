@@ -1,17 +1,28 @@
 import React, { useState } from "react";
 import { useFilter } from "../../contexts/Filter/FilterProvider";
 import { useCategory } from "../../contexts/Categories/CategoriesProvider";
-import { max } from "lodash";
+import { useProduct } from "../../contexts/Product/ProductProvider";
 
 const Filter = () => {
   const { closeFilter } = useFilter();
   const { categories } = useCategory();
+  const {fetchFilteredProducts} = useProduct()
   const [selectedCategory, setSelectedCategory] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sort, setSort] = useState("");
   
-
+  const handleSave = () => {
+    console.log("clicked");
+    
+  fetchFilteredProducts({
+    category: selectedCategory,
+    minPrice,
+    maxPrice,
+    sort,
+  });
+closeFilter()
+  }
   const handleCategoryClick = (categoryName) => {
     setSelectedCategory(categoryName);
   };
@@ -83,7 +94,9 @@ const Filter = () => {
         </div>
       </div>
       <div className="flex justify-end mt-5">
-        <button className="rounded bg-primary items-center border border-primary text-white py-1 xs:px-3 lg:px-8 hover:bg-transparent hover:text-primary transition">
+        <button className="rounded bg-primary items-center border border-primary text-white py-1 xs:px-3 lg:px-8 hover:bg-transparent hover:text-primary transition"
+        onClick={handleSave}
+        >
           Save
         </button>
         <button

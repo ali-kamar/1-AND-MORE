@@ -33,8 +33,12 @@ export const ProductProvider = ({ children }) => {
        const response = await axios.get("/global/product", {
          params: { category, minPrice, maxPrice, sort },
        });
+       console.log(response);
+       
        setProducts(response.data);
      } catch (err) {
+      console.log(err);
+      
        setError(err.response?.data?.msg || "Error fetching products");
      }
    };
