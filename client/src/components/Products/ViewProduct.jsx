@@ -25,7 +25,7 @@ const ViewProduct = () => {
 
       // Check if the product is already in the cart
       const productInCart = updatedCart.find(
-        (item) => item.product_id === product.id
+        (item) => item.id === product.product_id
       );
 
       if (!productInCart) {
