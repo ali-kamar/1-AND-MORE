@@ -1,12 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import { useFilter } from "../../contexts/Filter/FilterProvider";
 import { useProduct } from "../../contexts/Product/ProductProvider";
 
 const Searchbar = () => {
   const { toggleFilter } = useFilter();
-  const { fetchProducts } = useProduct();
+  const { fetchProducts, fetchFilteredProducts } = useProduct();
+  const [searchTerm, setSearchTerm] = useState(""); // New state for search term
+
+  const handleSearch = () => {    
+    fetchFilteredProducts({ search: searchTerm });
+  };
 
   const handleReset = () => {
+    setSearchTerm("");
     fetchProducts();
   };
   return (
@@ -33,10 +39,15 @@ const Searchbar = () => {
           type="text"
           name="search"
           id="search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full border border-primary rounded-none p-3 focus:outline-none "
           placeholder="Search products..."
         />
-        <button className="bg-primary items-center border border-primary text-white xs:px-3 lg:px-8  hover:bg-transparent hover:text-primary transition ">
+        <button
+          className="bg-primary items-center border border-primary text-white xs:px-3 lg:px-8  hover:bg-transparent hover:text-primary transition "
+          onClick={handleSearch}
+        >
           Search
         </button>
         <button

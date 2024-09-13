@@ -34,7 +34,8 @@ const Products = () => {
 
   return (
     <div className="my-10">
-      <OfferCarousel offers={offerProducts} />
+      {offerProducts.length > 0 && <OfferCarousel offers={offerProducts} />}
+
       <Searchbar />
 
       <div className="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">

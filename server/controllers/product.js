@@ -3,7 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const getAllProducts = async (req, res) => {
-  const { category, sort, minPrice, maxPrice } = req.query;
+  const { category, sort, minPrice, maxPrice, search } = req.query;
 
   let query = "SELECT * FROM products WHERE 1=1"; // Start with a base query
   const values = [];
@@ -23,12 +23,13 @@ const getAllProducts = async (req, res) => {
     values.push(maxPrice);
   }
 
+  if (search && search !== "") {
+    query += ` AND name ILIKE $${values.length + 1}`;
+    values.push(`%${search}%`); // Use ILIKE for case-insensitive search
+  }
+
   if (sort && sort !== "") {
-    if (sort === "asc") {
-      query += " ORDER BY price ASC";
-    } else if (sort === "desc") {
-      query += " ORDER BY price DESC";
-    }
+    query += sort === "asc" ? " ORDER BY price ASC" : " ORDER BY price DESC";
   }
 
   const products = await pool.query(query, values);
@@ -127,7 +128,6 @@ const editProduct = async (req, res) => {
   if (!name || !price || !imageURL || !category) {
     throw new BadRequestError("Missing values");
   }
-  
 
   const fields = [];
   const values = [];

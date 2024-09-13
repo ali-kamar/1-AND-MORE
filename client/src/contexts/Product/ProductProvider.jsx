@@ -28,12 +28,12 @@ export const ProductProvider = ({ children }) => {
      minPrice,
      maxPrice,
      sort,
+     search
    }) => {
      try {
        const response = await axios.get("/global/product", {
-         params: { category, minPrice, maxPrice, sort },
+         params: { category, minPrice, maxPrice, sort, search },
        });
-       console.log(response);
        
        setProducts(response.data);
      } catch (err) {
