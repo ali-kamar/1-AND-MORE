@@ -22,7 +22,7 @@ const Wishlist = () => {
   }, [products]);
 
   if (wishlistProducts.length === 0) {
-    return <p className="text-center">Your wishlist is empty.</p>;
+    return <p className="text-center text-lg py-12 font-medium">Your wishlist is empty.</p>;
   }
 
   const addToCart = (id) => {
@@ -45,6 +45,24 @@ const Wishlist = () => {
       showNotification("No user found!", "error");
     }
   };
+
+   const deleteFromWishlist = (productId) => {
+     const user = JSON.parse(localStorage.getItem("user"));
+     if (user && user.wishlist) {
+       const updatedWishlist = user.wishlist.filter((id) => id !== productId); // Remove the product from the wishlist
+
+       user.wishlist = updatedWishlist;
+       localStorage.setItem("user", JSON.stringify(user)); // Update localStorage
+
+       // Update state to reflect the changes
+       const updatedWishlistProducts = wishlistProducts.filter(
+         (product) => product.product_id !== productId
+       );
+       setWishlistProducts(updatedWishlistProducts);
+
+       showNotification("Product removed from wishlist!", "success");
+     }
+   };
 
   return (
     <div className="space-y-4 sm:container pt-4 pb-16 xs:px-1">
@@ -91,8 +109,9 @@ const Wishlist = () => {
             {product.isavailable ? "Add to Cart" : "Out of Stock"}
           </button>
 
-          <div className="text-gray-600 cursor-pointer hover:text-primary"
-          
+          <div
+            className="text-gray-600 cursor-pointer hover:text-primary"
+            onClick={() => deleteFromWishlist(product.product_id)}
           >
             <i className="fa-solid fa-trash"></i>
           </div>
