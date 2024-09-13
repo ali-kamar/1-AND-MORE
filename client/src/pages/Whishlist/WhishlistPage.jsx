@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 const WhishlistPage = () => {
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/login");
-  //   }
-  // });
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  });
   return (
     <>
       <Header />

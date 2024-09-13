@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useProduct } from "../../contexts/Product/ProductProvider";
+import Notification from "../Notification/Notification";
+import { useNotification } from "../../contexts/Notification/NotificationProvider";
 
 const Wishlist = () => {
   const [wishlistProducts, setWishlistProducts] = useState([]);
   const { products } = useProduct(); // Assuming you already have all products in your context
-
+  const { isOpen, notification, showNotification } = useNotification();
   useEffect(() => {
     // Get user and wishlist from localStorage
     const user = JSON.parse(localStorage.getItem("user"));
@@ -22,6 +24,27 @@ const Wishlist = () => {
   if (wishlistProducts.length === 0) {
     return <p className="text-center">Your wishlist is empty.</p>;
   }
+
+  const addToCart = (id) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      const updatedCart = [...user.cart]; // Clone the current cart
+
+      // Check if the product is already in the cart
+      const productInCart = updatedCart.find((item) => item.id === id);
+
+      if (!productInCart) {
+        updatedCart.push({ id, quantity: 1 }); // Add new product with quantity 1
+        user.cart = updatedCart;
+        localStorage.setItem("user", JSON.stringify(user));
+        showNotification("Product added to cart!", "success");
+      } else {
+        showNotification("Product is already in the cart!", "error");
+      }
+    } else {
+      showNotification("No user found!", "error");
+    }
+  };
 
   return (
     <div className="space-y-4 sm:container pt-4 pb-16 xs:px-1">
@@ -63,15 +86,21 @@ const Wishlist = () => {
                 ? "bg-primary hover:bg-transparent hover:text-primary transition"
                 : "bg-red-400 cursor-not-allowed"
             }`}
+            onClick={() => addToCart(product.product_id)}
           >
             {product.isavailable ? "Add to Cart" : "Out of Stock"}
           </button>
 
-          <div className="text-gray-600 cursor-pointer hover:text-primary">
+          <div className="text-gray-600 cursor-pointer hover:text-primary"
+          
+          >
             <i className="fa-solid fa-trash"></i>
           </div>
         </div>
       ))}
+      {isOpen && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
     </div>
   );
 };
