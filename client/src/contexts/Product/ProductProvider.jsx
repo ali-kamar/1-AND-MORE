@@ -72,6 +72,7 @@ export const ProductProvider = ({ children }) => {
         updateProducts,
         removeProduct,
         fetchFilteredProducts,
+        fetchProducts,
       }}
     >
       {children}

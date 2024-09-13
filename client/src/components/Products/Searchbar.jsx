@@ -1,12 +1,22 @@
-import React from 'react'
-import { useFilter } from '../../contexts/Filter/FilterProvider';
+import React from "react";
+import { useFilter } from "../../contexts/Filter/FilterProvider";
+import { useProduct } from "../../contexts/Product/ProductProvider";
 
 const Searchbar = () => {
-  const { toggleFilter} = useFilter()
+  const { toggleFilter } = useFilter();
+  const { fetchProducts } = useProduct();
+
+  const handleReset = () => {
+    fetchProducts();
+  };
   return (
     <div className="flex justify-center my-10">
       <div className="w-full lg:max-w-xl relative flex md:max-w-md xs:max-w-sm">
-        <span className="mt-3 mr-3 cursor-pointer " title="Reset All Filters">
+        <span
+          className="mt-3 mr-3 cursor-pointer "
+          title="Reset All Filters"
+          onClick={handleReset}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="28"
@@ -40,4 +50,4 @@ const Searchbar = () => {
   );
 };
 
-export default Searchbar
+export default Searchbar;
