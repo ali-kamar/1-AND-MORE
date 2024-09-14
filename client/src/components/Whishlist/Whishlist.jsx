@@ -5,13 +5,15 @@ import { useNotification } from "../../contexts/Notification/NotificationProvide
 
 const Wishlist = () => {
   const [wishlistProducts, setWishlistProducts] = useState([]);
-  const { products } = useProduct(); // Assuming you already have all products in your context
+  const { products } = useProduct(); 
   const { isOpen, notification, showNotification } = useNotification();
   useEffect(() => {
     // Get user and wishlist from localStorage
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.wishlist) {
       const wishlistProductIds = user.wishlist;
+      console.log(wishlistProductIds);
+      
 
       // Filter products that are in the user's wishlist
       const wishlistItems = products.filter((product) =>
