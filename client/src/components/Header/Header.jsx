@@ -3,11 +3,15 @@ import logo from "../../assets/images/logo.JPG";
 
 const Header = () => {
   const [wishlistQuantity, setWishlistQuantity] = useState(0);
+  const [cartQuantity, setCartQuantity] = useState(0);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.wishlist) {
       setWishlistQuantity(user.wishlist.length);
+    }
+    if(user && user.cart){
+      setCartQuantity(user.cart.length)
     }
     
   }, []);
@@ -42,7 +46,7 @@ const Header = () => {
             </div>
             <div className="text-xs leading-3">Cart</div>
             <div className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-              2
+              {cartQuantity}
             </div>
           </a>
           <a

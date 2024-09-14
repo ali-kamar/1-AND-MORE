@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import { useProduct } from "../../../contexts/Product/ProductProvider";
-import { useLoader } from "../../../contexts/Loader/LoaderProvider";
+import { useNotification } from "../../../contexts/Notification/NotificationProvider";
+import Notification from "../../Notification/Notification";
 
 const CartProduct = () => {
   const [cartProducts, setCartProducts] = useState([]);
   const [cartQuantities, setCartQuantities] = useState({});
   const { products } = useProduct();
-  const { showLoader, hideLoader } = useLoader();
+  const { isOpen, notification, showNotification } = useNotification();
 
   useEffect(() => {
     // Get user and cart from localStorage
@@ -76,6 +77,7 @@ const CartProduct = () => {
       "user",
       JSON.stringify({ ...user, cart: updatedCart })
     );
+    showNotification("Deleted Successfully", "success")
   };
 
   return (
@@ -158,6 +160,9 @@ const CartProduct = () => {
           </td>
         </tr>
       ))}
+      {isOpen && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
     </>
   );
 };
