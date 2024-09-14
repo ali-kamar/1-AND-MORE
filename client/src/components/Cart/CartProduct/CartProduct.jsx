@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import { useProduct } from "../../../contexts/Product/ProductProvider";
+import { useLoader } from "../../../contexts/Loader/LoaderProvider";
 
 const CartProduct = () => {
   const [cartProducts, setCartProducts] = useState([]);
   const [cartQuantities, setCartQuantities] = useState({});
   const { products } = useProduct();
+  const { showLoader, hideLoader } = useLoader();
 
   useEffect(() => {
     // Get user and cart from localStorage
@@ -52,6 +54,28 @@ const CartProduct = () => {
 
       return updatedQuantities;
     });
+  };
+
+  // Function to handle product deletion
+  const handleDelete = (productId) => {
+    // Remove the product from the cart state
+    setCartProducts((prevProducts) =>
+      prevProducts.filter((product) => product.product_id !== productId)
+    );
+
+    // Remove the product from the quantities state
+    setCartQuantities((prevQuantities) => {
+      const { [productId]: _, ...remainingQuantities } = prevQuantities;
+      return remainingQuantities;
+    });
+
+    // Update localStorage
+    const user = JSON.parse(localStorage.getItem("user"));
+    const updatedCart = user.cart.filter((item) => item.id !== productId);
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ ...user, cart: updatedCart })
+    );
   };
 
   return (
@@ -113,16 +137,22 @@ const CartProduct = () => {
               $
               {product.offertype
                 ? (
-                    product.price -
-                    product.price * (product.offertype / 100)
-                  ).toFixed(2) * (cartQuantities[product.product_id] || 1)
-                : product.price * (cartQuantities[product.product_id] || 1)}
+                    (product.price -
+                      product.price * (product.offertype / 100)) *
+                    (cartQuantities[product.product_id] || 1)
+                  ).toFixed(2)
+                : (
+                    product.price * (cartQuantities[product.product_id] || 1)
+                  ).toFixed(2)}
             </span>{" "}
             {/* Display total price for product */}
           </td>
 
           <td className="py-4 px-4 text-center min-w-[80px]">
-            <button className="text-primary hover:text-gray-800 text-2xl">
+            <button
+              className="text-primary hover:text-gray-800 text-2xl"
+              onClick={() => handleDelete(product.product_id)} // Delete product
+            >
               <FaTrashAlt />
             </button>
           </td>
