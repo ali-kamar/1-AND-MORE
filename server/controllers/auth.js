@@ -1,7 +1,12 @@
 const pool = require("../db/connect");
 const { StatusCodes } = require("http-status-codes");
 const bcrypt = require("bcrypt");
-const { UserError, UnauthenticatedError, CustomAPIError } = require("../errors");
+const {
+  UserError,
+  UnauthenticatedError,
+  CustomAPIError,
+  BadRequestError,
+} = require("../errors");
 const jwtGenerator = require("../utils/jwtGenerator");
 
 const register = async (req, res) => {
@@ -15,8 +20,8 @@ const register = async (req, res) => {
     throw new UserError("user already exists");
   }
 
-  if(password.length < 6){
-throw new CustomAPIError("Password must be more than 6 digits")
+  if (password.length < 6) {
+    throw new CustomAPIError("Password must be more than 6 digits");
   }
 
   const saltRound = 10;
@@ -69,4 +74,20 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ token, user_id, role });
 };
 
-module.exports = { register, login };
+const checkAdmin = async (req, res) => {
+  const { id } = req.body;
+  if (!id) {
+    throw new BadRequestError("ID not provided");
+  }
+  const admin = await pool.query("SELECT user_role from users WHERE user_id = $1", [id]);
+
+  if(admin.rows[0].user_role === "user"){
+    throw new UnauthenticatedError("Not an admin");
+  }
+
+  res.status(StatusCodes.OK).json(admin.rows[0].user_role);
+  
+  
+};
+
+module.exports = { register, login, checkAdmin };

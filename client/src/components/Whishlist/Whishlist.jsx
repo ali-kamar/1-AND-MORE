@@ -24,7 +24,7 @@ const Wishlist = () => {
   }, [products]);
 
   if (wishlistProducts.length === 0) {
-    return <p className="text-center text-lg py-12 font-medium">Your wishlist is empty.</p>;
+    return <p className="text-center text-lg py-12 font-medium">Your Wishlist is empty.</p>;
   }
 
   const addToCart = (id) => {

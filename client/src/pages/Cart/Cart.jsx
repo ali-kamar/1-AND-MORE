@@ -51,9 +51,6 @@ const Cart = () => {
         >
           Checkout
         </button>
-        <button className="ml-2 bg-black items-center border rounded border-black text-white p-4 hover:bg-transparent hover:text-primary transition">
-          Clear
-        </button>
       </div>
       {isCheckout && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
