@@ -85,7 +85,7 @@ const checkAdmin = async (req, res) => {
     throw new UnauthenticatedError("Not an admin");
   }
 
-  res.status(StatusCodes.OK).json(admin.rows[0].user_role);
+  res.status(StatusCodes.OK).json(admin.rows[0]);
   
   
 };
