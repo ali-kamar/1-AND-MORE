@@ -29,8 +29,8 @@ const Login = () => {
         wishlist: [], // In case wishlist is not provided, default to an empty array
       };
       localStorage.setItem("user", JSON.stringify(userObject));
-
-      navigate("/");
+      if (response.data.role === "admin") navigate("/admin");
+      else navigate("/")
     } catch (error) {
       showNotification("Email or password is incorrect!", "error");
     } finally {
