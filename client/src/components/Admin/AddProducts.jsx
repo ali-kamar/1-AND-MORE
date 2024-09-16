@@ -53,12 +53,9 @@ const AddProducts = () => {
       setImageUrl("");
       setSelectedCategory("");
       setIsAvailable(true);
+
     } catch (error) {
-      console.error(
-        "Error adding product:",
-        error.response?.data || error.message
-      );
-      showNotification("Failed to add product. Please try again!", "error");
+      showNotification(error.response?.data.msg, "error");
     }
     finally{
       hideLoader()

@@ -33,7 +33,7 @@ const ProductsDashboard = ({ product }) => {
         </div>
       </td>
 
-      <td className="font-semibold py-4 px-4 text-center min-w-[120px] border border-black">
+      <td className="capitalize font-semibold py-4 px-4 text-center min-w-[120px] border border-black">
         <p>{product.name}</p>
       </td>
 

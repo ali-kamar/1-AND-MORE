@@ -35,13 +35,19 @@ const OfferCarousel = ({ offers }) => {
               <img
                 src={offer.imageurl}
                 alt={offer.name}
-                className="w-full h-40 object-cover mb-4"
+                className="w-full  object-cover mb-4"
               />
             </div>
             <h3 className="text-lg font-semibold capitalize">{offer.name}</h3>
-            <p className="text-xl text-primary font-semibold">
-              ${offer.discountedPrice}
-            </p>
+            <div className="flex items-baseline mb-1 space-x-2">
+              <p className="text-xl text-primary font-semibold">
+                ${offer.discountedPrice}
+              </p>
+              <p className="text-sm text-gray-400 line-through">
+                ${offer.price}
+              </p>
+            </div>
+
             <a
               href={`/product/${offer.product_id}`}
               className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition mt-2"

@@ -5,7 +5,7 @@ import { useProduct } from "../../contexts/Product/ProductProvider";
 import OfferCarousel from "./OfferCarousel";
 
 const Products = () => {
-  const { products, error } = useProduct();
+  const { products } = useProduct();
   const [priceMap, setPriceMap] = useState({});
   const [offerProducts, setOfferProducts] = useState([]);
 
