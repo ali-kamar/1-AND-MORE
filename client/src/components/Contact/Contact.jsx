@@ -1,6 +1,44 @@
-import React from 'react'
+import React, {useState} from 'react'
+import emailjs from "emailjs-com";
 
 const Contact = () => {
+
+    const [formData, setFormData] = useState({
+      name: "",
+      email: "",
+      message: "",
+    });
+    const [isSent, setIsSent] = useState(false);
+
+    const handleChange = (e) => {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+
+      emailjs
+        .sendForm(
+          "service_r58vglz",
+          "template_69p8bwj",
+          e.target,
+          "WoIzKZBsNjVxbuVWY"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+            setIsSent(true);
+            setFormData({ name: "", email: "", message: "" });
+          },
+          (error) => {
+            console.log(error.text);
+            setIsSent(false);
+          }
+        );
+    };
   return (
     <section className="bg-primary text-white" id="contact">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-20">
@@ -64,7 +102,9 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div className="ml-4 mb-4">
-                    <h3 className="mb-2 text-lg font-medium leading-6">Contact</h3>
+                    <h3 className="mb-2 text-lg font-medium leading-6">
+                      Contact
+                    </h3>
                     <p className="">Mobile: +961 78806759</p>
                     <p className="">Mail: onedollarandmoreshop@gmail.com</p>
                   </div>
@@ -101,7 +141,7 @@ const Contact = () => {
               <h2 className="mb-4 text-2xl font-bold dark:text-white">
                 Ready to Get Started?
               </h2>
-              <form id="contactForm">
+              <form id="contactForm" onSubmit={handleSubmit}>
                 <div className="mb-6">
                   <div className="mx-0 mb-1 sm:mb-4">
                     <div className="mx-0 mb-1 sm:mb-4">
@@ -116,6 +156,8 @@ const Contact = () => {
                         placeholder="Your name"
                         className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
                         name="name"
+                        value={formData.name}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="mx-0 mb-1 sm:mb-4">
@@ -130,6 +172,8 @@ const Contact = () => {
                         placeholder="Your email address"
                         className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
                         name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -144,6 +188,8 @@ const Contact = () => {
                       cols="30"
                       rows="5"
                       placeholder="Write your message..."
+                      value={formData.message}
+                      onChange={handleChange}
                       className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
                     ></textarea>
                   </div>
