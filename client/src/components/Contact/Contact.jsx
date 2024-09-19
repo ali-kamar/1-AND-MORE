@@ -1,14 +1,16 @@
 import React, {useState} from 'react'
 import emailjs from "emailjs-com";
+import Modal from './Modal';
 
 const Contact = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", message: "" });
 
     const [formData, setFormData] = useState({
       name: "",
       email: "",
       message: "",
     });
-    const [isSent, setIsSent] = useState(false);
 
     const handleChange = (e) => {
       setFormData({
@@ -29,16 +31,20 @@ const Contact = () => {
         )
         .then(
           (result) => {
-            console.log(result.text);
-            setIsSent(true);
-            setFormData({ name: "", email: "", message: "" });
+            setModalContent({
+              title: "Success!",
+              message: "Message sent successfully!",
+            });
+            setIsModalOpen(true);
+            setFormData({ name: "", email: "", message: "" }); // Reset after success
           },
           (error) => {
             console.log(error.text);
-            setIsSent(false);
+           
           }
         );
     };
+
   return (
     <section className="bg-primary text-white" id="contact">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-20">
@@ -154,7 +160,7 @@ const Contact = () => {
                         id="name"
                         autoComplete="given-name"
                         placeholder="Your name"
-                        className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
+                        className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-black sm:mb-0"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
@@ -170,7 +176,7 @@ const Contact = () => {
                         id="email"
                         autoComplete="email"
                         placeholder="Your email address"
-                        className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
+                        className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-black sm:mb-0"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -184,13 +190,13 @@ const Contact = () => {
                     ></label>
                     <textarea
                       id="textarea"
-                      name="textarea"
+                      name="message"
                       cols="30"
                       rows="5"
                       placeholder="Write your message..."
                       value={formData.message}
                       onChange={handleChange}
-                      className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
+                      className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-black sm:mb-0"
                     ></textarea>
                   </div>
                 </div>
@@ -208,6 +214,12 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={modalContent.title}
+        message={modalContent.message}
+      />
     </section>
   );
 }
