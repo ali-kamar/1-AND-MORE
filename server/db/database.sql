@@ -28,12 +28,10 @@ CREATE TABLE Categories (
 CREATE TABLE orders (
     order_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL,
-    product_id UUID NOT NULL,
-    quantity INT NOT NULL,
+    data JSONB,
     order_status VARCHAR(50) NOT NULL DEFAULT 'pending',
     address TEXT NOT NULL,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(20) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
