@@ -1,17 +1,32 @@
 // src/components/OfferCarousel.jsx
-import React from "react";
+import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 const OfferCarousel = ({ offers }) => {
+  const swiperRef = useRef(null);
+
+  const handlePrev = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slidePrev(); // Access the swiper instance correctly
+    }
+  };
+
+  const handleNext = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slideNext(); // Access the swiper instance correctly
+    }
+  };
+
   return (
-    <div className="offers-section my-10">
+    <div className="offers-section my-10 relative">
       <h2 className="text-3xl font-bold mb-4 text-center flex items-center justify-center space-x-2">
         <span>🔥</span>
         <span>Offers</span>
         <span>🔥</span>
       </h2>
       <Swiper
+        onSwiper={(swiper) => (swiperRef.current = swiper)} // Store the swiper instance
         spaceBetween={10}
         slidesPerView={1}
         breakpoints={{
@@ -35,7 +50,7 @@ const OfferCarousel = ({ offers }) => {
               <img
                 src={offer.imageurl}
                 alt={offer.name}
-                className="w-full  object-cover mb-4"
+                className="w-full object-cover mb-4"
               />
             </div>
             <h3 className="text-lg font-semibold capitalize">{offer.name}</h3>
@@ -57,6 +72,21 @@ const OfferCarousel = ({ offers }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+      {/* Navigation Buttons */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-primary text-white rounded-full p-2 shadow hover:bg-secondary transition"
+        style={{ zIndex: 10 }} // Ensure it's above other elements
+      >
+        &lt;
+      </button>
+      <button
+        onClick={handleNext}
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-primary text-white rounded-full p-2 shadow hover:bg-secondary transition"
+        style={{ zIndex: 10 }} // Ensure it's above other elements
+      >
+        &gt;
+      </button>
     </div>
   );
 };
