@@ -28,6 +28,8 @@ const CartProduct = () => {
       const cartItems = products.filter((product) =>
         cartProductsIds.includes(product.product_id)
       );
+      console.log(cartItems);
+      
 
       setCartProducts(cartItems);
       setCartQuantities(initialQuantities); // Set the quantities state
@@ -131,7 +133,6 @@ const CartProduct = () => {
 
             <td className="py-4 px-4 text-center min-w-[120px]">
               <span className="text-black font-semibold">
-                {" "}
                 $
                 {product.offertype
                   ? (
