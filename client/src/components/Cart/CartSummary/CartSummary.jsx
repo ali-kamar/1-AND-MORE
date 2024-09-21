@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useProduct } from "../../../contexts/Product/ProductProvider";
+import axios from "../../../api/axios";
+import Notification from "../../Notification/Notification"
+import { useNotification } from "../../../contexts/Notification/NotificationProvider";
 
 const CartSummary = ({ closeCheckout }) => {
   const [itemsTotal, setItemsTotal] = useState(0);
   const [priceTotal, setPriceTotal] = useState(0);
-  const [cartProducts, setCartProducts] = useState([]);
-  const [cartQuantities, setCartQuantities] = useState({});
-  const [formData, setFormData] = useState([])
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [formData, setFormData] = useState([]);
   const { products } = useProduct();
+  const { isOpen, notification, showNotification } = useNotification();
 
   useEffect(() => {
     const data = []; // Move data initialization inside the useEffect to reset it each time
 
     const user = JSON.parse(localStorage.getItem("user"));
+
     if (user && user.cart) {
       setItemsTotal(user.cart.length);
       const cartProductsData = user.cart;
@@ -59,17 +65,39 @@ const CartSummary = ({ closeCheckout }) => {
         }
       });
 
-      console.log(data);
-      
-      setFormData(data)
+      setFormData(data);
       setPriceTotal(totalPrice.toFixed(2));
-      setCartProducts(cartItems);
-      setCartQuantities(initialQuantities);
     }
   }, [products]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = JSON.parse(localStorage.getItem("user"));
+    let user_id = user.user_id;
+    try {
+      const { data } = await axios.post("user/orders/add-order", {
+        user_id,
+        data:formData,
+        total:priceTotal,
+        address,
+        name,
+        phone,
+      });
+      if(data){
+        closeCheckout();
+        showNotification("Order added successfully!", "success");
+      }
+      
+    } catch (error) {
+      showNotification(error.response.data.msg, "error");
+    }
+  };
+
   return (
-    <div className="max-w-xl w-full bg-black p-10 rounded text-white">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-xl w-full bg-black p-10 rounded text-white"
+    >
       <h4 className="font-semibold text-lg mb-5 border-b border-primary pb-5">
         Order Summary
       </h4>
@@ -82,7 +110,14 @@ const CartSummary = ({ closeCheckout }) => {
         <div className="mb-5">
           <label htmlFor="name">Name</label>
           <br />
-          <input type="text" name="name" id="" className="w-full p-1 rounded" />
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full p-1 rounded text-black"
+            required
+          />
         </div>
         <div className="mb-5">
           <label htmlFor="phone">Phone</label>
@@ -90,8 +125,10 @@ const CartSummary = ({ closeCheckout }) => {
           <input
             type="number"
             name="phone"
-            id=""
-            className="w-full p-1 rounded"
+            required
+            className="w-full p-1 rounded text-black"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
         <div className="mb-5">
@@ -100,8 +137,10 @@ const CartSummary = ({ closeCheckout }) => {
           <input
             type="text"
             name="address"
-            id=""
-            className="w-full p-1 rounded"
+            required
+            className="w-full p-1 rounded text-black"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           />
         </div>
       </div>
@@ -110,7 +149,10 @@ const CartSummary = ({ closeCheckout }) => {
         <p>{priceTotal}</p>
       </div>
       <div className="flex justify-end">
-        <button className="rounded bg-primary items-center border border-primary text-white py-1 xs:px-3 lg:px-8 hover:bg-transparent hover:text-primary transition">
+        <button
+          className="rounded bg-primary items-center border border-primary text-white py-1 xs:px-3 lg:px-8 hover:bg-transparent hover:text-primary transition"
+          type="submit"
+        >
           Order
         </button>
         <button
@@ -120,7 +162,10 @@ const CartSummary = ({ closeCheckout }) => {
           Close
         </button>
       </div>
-    </div>
+      {isOpen && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
+    </form>
   );
 };
 

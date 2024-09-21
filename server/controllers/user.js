@@ -58,7 +58,7 @@ const updateAccount = async (req, res) => {
 
 const addOrder = async (req, res) => {
   const { user_id, data, total, address, name, phone } = req.body;
-
+  
   // Validate required fields
   if (!user_id || !data || !address || !name || !phone || !total) {
     throw new BadRequestError("Missing required fields");
