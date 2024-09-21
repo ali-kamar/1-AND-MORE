@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import axios from "../../api/axios"; // Adjust the path according to your project structure
+import axios from "../../api/axios"; 
 import { useLoader } from "../Loader/LoaderProvider";
 // Create the context
 export const ProductContext = createContext();

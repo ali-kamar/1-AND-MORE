@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import AdminNavbar from "../../components/Admin/AdminNavbar";
 import AdminOrders from "../../components/Admin/AdminOrders";
-import OrdersFilter from "../../components/Orders/OrdersFilter";
 import { useNavigate } from "react-router-dom";
 import { useAdmin } from "../../contexts/Admin/AdminProvider";
 
@@ -36,7 +35,6 @@ const OrdersPage = () => {
   return (
     <>
       <AdminNavbar />
-      <OrdersFilter />
       <AdminOrders />
     </>
   );
