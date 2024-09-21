@@ -1,11 +1,14 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "../../api/axios";
 import { useLoader } from "../Loader/LoaderProvider";
+import Notification from "../../components/Notification/Notification";
+import { useNotification } from "../Notification/NotificationProvider";
 // Create the context
 export const OrdersContext = createContext();
 
 // Create the provider component
 export const OrdersProvider = ({ children }) => {
+    const { isOpen, notification, showNotification } = useNotification();
   const [orders, setOrders] = useState([]);
   const [adminOrders, setAdminOrders] = useState([]);
   const { showLoader, hideLoader } = useLoader();
@@ -19,8 +22,9 @@ export const OrdersProvider = ({ children }) => {
         params: { status },
       });
       setOrders(response.data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      showNotification(error.response.data.msg, "error");
+      setOrders([])
     } finally {
       hideLoader();
     }
@@ -53,6 +57,14 @@ export const OrdersProvider = ({ children }) => {
         adminOrders,
       }}
     >
+      <div>
+        {isOpen && (
+          <Notification
+            message={notification.message}
+            type={notification.type}
+          />
+        )}
+      </div>
       {children}
     </OrdersContext.Provider>
   );

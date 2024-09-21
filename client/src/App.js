@@ -27,11 +27,11 @@ import { OrdersProvider } from "./contexts/Orders/OrdersProvider";
 function App() {
   return (
     <LoaderProvider>
-      <OrdersProvider>
-        <AdminProvider>
-          <CategoriesProvider>
-            <ProductProvider>
-              <NotificationProvider>
+      <NotificationProvider>
+        <OrdersProvider>
+          <AdminProvider>
+            <CategoriesProvider>
+              <ProductProvider>
                 <FilterProvider>
                   <Router>
                     <Routes>
@@ -65,11 +65,11 @@ function App() {
                     </Routes>
                   </Router>
                 </FilterProvider>
-              </NotificationProvider>
-            </ProductProvider>
-          </CategoriesProvider>
-        </AdminProvider>
-      </OrdersProvider>
+              </ProductProvider>
+            </CategoriesProvider>
+          </AdminProvider>
+        </OrdersProvider>
+      </NotificationProvider>
     </LoaderProvider>
   );
 }
