@@ -11,10 +11,11 @@ export const OrdersProvider = ({ children }) => {
   const { showLoader, hideLoader } = useLoader();
 
   // Fetch products from the API
-  const fetchOrders = async (id, status) => {
+  const fetchOrders = async (status) => {
     try {
       showLoader();
-      const response = await axios.get(`user/orders/${id}`, {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const response = await axios.get(`user/orders/${user.user_id}`, {
         params: { status },
       });
       setOrders(response.data);
@@ -39,6 +40,9 @@ export const OrdersProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    fetchOrders( "pending")
+  }, [])
   
   return (
     <OrdersContext.Provider
