@@ -28,9 +28,6 @@ const CartProduct = () => {
       const cartItems = products.filter((product) =>
         cartProductsIds.includes(product.product_id)
       );
-      console.log(cartItems);
-      
-
       setCartProducts(cartItems);
       setCartQuantities(initialQuantities); // Set the quantities state
     }

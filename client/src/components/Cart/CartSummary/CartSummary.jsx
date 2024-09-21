@@ -6,9 +6,12 @@ const CartSummary = ({ closeCheckout }) => {
   const [priceTotal, setPriceTotal] = useState(0);
   const [cartProducts, setCartProducts] = useState([]);
   const [cartQuantities, setCartQuantities] = useState({});
+  const [formData, setFormData] = useState([])
   const { products } = useProduct();
 
   useEffect(() => {
+    const data = []; // Move data initialization inside the useEffect to reset it each time
+
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.cart) {
       setItemsTotal(user.cart.length);
@@ -25,6 +28,7 @@ const CartSummary = ({ closeCheckout }) => {
       const cartItems = products.filter((product) =>
         cartProductsIds.includes(product.product_id)
       );
+
       // Calculate total price
       let totalPrice = 0;
       cartItems.forEach((product) => {
@@ -34,13 +38,31 @@ const CartSummary = ({ closeCheckout }) => {
             product.price * (product.offertype / 100)
           ).toFixed(2);
           totalPrice += newPrice * initialQuantities[product.product_id];
+          let total = (
+            newPrice * initialQuantities[product.product_id]
+          ).toFixed(2);
+          data.push({
+            quantity: initialQuantities[product.product_id],
+            name: product.name,
+            total,
+          });
         } else {
           totalPrice += product.price * initialQuantities[product.product_id];
+          let total = (
+            product.price * initialQuantities[product.product_id]
+          ).toFixed(2);
+          data.push({
+            quantity: initialQuantities[product.product_id],
+            name: product.name,
+            total,
+          });
         }
       });
 
+      console.log(data);
+      
+      setFormData(data)
       setPriceTotal(totalPrice.toFixed(2));
-
       setCartProducts(cartItems);
       setCartQuantities(initialQuantities);
     }

@@ -57,17 +57,17 @@ const updateAccount = async (req, res) => {
 };
 
 const addOrder = async (req, res) => {
-  const { user_id, product_id, quantity, address, name, phone } = req.body;
+  const { user_id, data, total, address, name, phone } = req.body;
 
   // Validate required fields
-  if (!user_id || !product_id || !quantity || !address || !name || !phone) {
+  if (!user_id || !data || !address || !name || !phone) {
     throw new BadRequestError("Missing required fields");
   }
 
   const result = await pool.query(
     `INSERT INTO orders (user_id, product_id, quantity, address, name, phone)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [user_id, product_id, quantity, address, name, phone]
+       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+    [user_id, JSON.stringify(data), address, name, phone]
   );
 
   res.status(StatusCodes.CREATED).json(result.rows[0]);

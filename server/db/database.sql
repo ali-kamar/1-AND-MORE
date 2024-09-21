@@ -28,8 +28,9 @@ CREATE TABLE Categories (
 CREATE TABLE orders (
     order_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL,
-    data JSONB,
+    data JSONB NOT NULL,
     order_status VARCHAR(50) NOT NULL DEFAULT 'pending',
+    total DECIMAL(10, 2) NOT NULL,
     address TEXT NOT NULL,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(20) NOT NULL,
