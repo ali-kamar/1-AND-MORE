@@ -1,4 +1,3 @@
-// src/components/OfferCarousel.jsx
 import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -7,14 +6,14 @@ const OfferCarousel = ({ offers }) => {
   const swiperRef = useRef(null);
 
   const handlePrev = () => {
-    if (swiperRef.current) {
-      swiperRef.current.swiper.slidePrev(); // Access the swiper instance correctly
+    if (swiperRef.current && swiperRef.current.slidePrev) {
+      swiperRef.current.slidePrev();
     }
   };
 
   const handleNext = () => {
-    if (swiperRef.current) {
-      swiperRef.current.swiper.slideNext(); // Access the swiper instance correctly
+    if (swiperRef.current && swiperRef.current.slideNext) {
+      swiperRef.current.slideNext();
     }
   };
 
