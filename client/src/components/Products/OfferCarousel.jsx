@@ -5,6 +5,7 @@ import "swiper/css";
 const OfferCarousel = ({ offers }) => {
   const swiperRef = useRef(null);
 
+  // Update to access navigation functions properly
   const handlePrev = () => {
     if (swiperRef.current && swiperRef.current.slidePrev) {
       swiperRef.current.slidePrev();
@@ -24,6 +25,8 @@ const OfferCarousel = ({ offers }) => {
         <span>Offers</span>
         <span>🔥</span>
       </h2>
+
+      {/* Swiper Setup */}
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)} // Store the swiper instance
         spaceBetween={10}
@@ -43,34 +46,39 @@ const OfferCarousel = ({ offers }) => {
         {offers.map((offer) => (
           <SwiperSlide
             key={offer.product_id}
-            className="p-4 bg-white shadow rounded"
+            className="flex flex-col justify-between p-4 bg-white shadow rounded h-full"
           >
-            <div className="relative">
+            {/* Image and Offer Details */}
+            <div className="flex-grow">
               <img
                 src={offer.imageurl}
                 alt={offer.name}
-                className="w-full object-cover mb-4"
+                className="w-full h-400 object-cover mb-4"
               />
-            </div>
-            <h3 className="text-lg font-semibold capitalize">{offer.name}</h3>
-            <div className="flex items-baseline mb-1 space-x-2">
-              <p className="text-xl text-primary font-semibold">
-                ${offer.discountedPrice}
-              </p>
-              <p className="text-sm text-gray-400 line-through">
-                ${offer.price}
-              </p>
+              <h3 className="text-lg font-semibold capitalize">{offer.name}</h3>
+              <div className="flex items-baseline mb-1 space-x-2">
+                <p className="text-xl text-primary font-semibold">
+                  ${offer.discountedPrice}
+                </p>
+                <p className="text-sm text-gray-400 line-through">
+                  ${offer.price}
+                </p>
+              </div>
             </div>
 
-            <a
-              href={`/product/${offer.product_id}`}
-              className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition mt-2"
-            >
-              View
-            </a>
+            {/* View Button */}
+            <div className="mt-auto">
+              <a
+                href={`/product/${offer.product_id}`}
+                className="block w-full py-1 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition"
+              >
+                View
+              </a>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
+
       {/* Navigation Buttons */}
       <button
         onClick={handlePrev}

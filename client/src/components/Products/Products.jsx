@@ -9,7 +9,6 @@ const Products = () => {
   const [priceMap, setPriceMap] = useState({});
   const [offerProducts, setOfferProducts] = useState([]);
 
-
   useEffect(() => {
     // Update new prices after products are fetched
     const newPriceMap = {};
@@ -35,23 +34,22 @@ const Products = () => {
   return (
     <div className="my-10">
       {offerProducts.length > 0 && <OfferCarousel offers={offerProducts} />}
-
       <Searchbar />
 
       <div className="grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-6 mt-10 p-4">
         {products.map((product) => (
           <div
             key={product.product_id}
-            className="bg-white shadow rounded overflow-hidden group"
+            className="bg-white shadow rounded overflow-hidden flex flex-col h-full "
           >
-            <div className="relative">
+            <div className="relative flex-grow">
               <img
                 src={product.imageurl}
                 alt={product.name}
                 className="w-full"
               />
             </div>
-            <div className="pt-4 pb-3 px-4">
+            <div className="pt-4 pb-3 px-4 flex-grow">
               <a href={`/product/${product.product_id}`}>
                 <h4 className="capitalize font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
                   {product.name}
