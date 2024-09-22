@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useOrder } from "../../contexts/Orders/OrdersProvider";
 
 const Orders = () => {
   const { fetchOrders, orders } = useOrder();
+  const [selectedStatus, setSelectedStatus] = useState("pending");
+
   const handleChange = (e) => {
-    fetchOrders(e.target.value)
-  }
+    const newStatus = e.target.value;
+    setSelectedStatus(newStatus);
+    fetchOrders(newStatus);
+  };
+
+  useEffect(() => {
+    fetchOrders(selectedStatus);
+  }, []);
   return (
     <div>
       <h2 className="text-4xl font-semibold text-center my-10">Orders</h2>
