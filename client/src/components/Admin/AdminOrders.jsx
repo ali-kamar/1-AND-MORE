@@ -48,7 +48,6 @@ const AdminOrders = () => {
   useEffect(() => {
     fetchAdminOrders(selectedStatus)
   }, [])
-
   return (
     <div>
       <h2 className="text-4xl font-semibold text-center my-10">Orders</h2>

@@ -12,8 +12,11 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    fetchOrders(selectedStatus);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("token");
+    if (token && user) fetchOrders(selectedStatus);
   }, []);
+
   return (
     <div>
       <h2 className="text-4xl font-semibold text-center my-10">Orders</h2>

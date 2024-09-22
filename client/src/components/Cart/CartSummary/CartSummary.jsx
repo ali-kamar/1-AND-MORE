@@ -3,8 +3,10 @@ import { useProduct } from "../../../contexts/Product/ProductProvider";
 import axios from "../../../api/axios";
 import Notification from "../../Notification/Notification";
 import { useNotification } from "../../../contexts/Notification/NotificationProvider";
+import { useNavigate } from "react-router-dom";
 
 const CartSummary = ({ closeCheckout }) => {
+  const navigate = useNavigate();
   const [itemsTotal, setItemsTotal] = useState(0);
   const [priceTotal, setPriceTotal] = useState(0);
   const [name, setName] = useState("");
@@ -95,8 +97,8 @@ const CartSummary = ({ closeCheckout }) => {
         setItemsTotal(0);
         setPriceTotal(0);
         setFormData([]); // Clear form data
-
         closeCheckout();
+        navigate('/orders')
         showNotification("Order added successfully!", "success");
       }
     } catch (error) {
