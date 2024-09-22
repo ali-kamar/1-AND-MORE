@@ -8,7 +8,7 @@ export const OrdersContext = createContext();
 
 // Create the provider component
 export const OrdersProvider = ({ children }) => {
-    const { isOpen, notification, showNotification } = useNotification();
+  const { isOpen, notification, showNotification } = useNotification();
   const [orders, setOrders] = useState([]);
   const [adminOrders, setAdminOrders] = useState([]);
   const { showLoader, hideLoader } = useLoader();
@@ -24,7 +24,7 @@ export const OrdersProvider = ({ children }) => {
       setOrders(response.data);
     } catch (error) {
       showNotification(error.response.data.msg, "error");
-      setOrders([])
+      setOrders([]);
     } finally {
       hideLoader();
     }
@@ -36,18 +36,32 @@ export const OrdersProvider = ({ children }) => {
       const response = await axios.get("admin/orders", {
         params: { status },
       });
-      setOrders(response.data);
+      setAdminOrders(response.data);
     } catch (err) {
-      console.log(err);
+      showNotification(err.response.data.msg, "error");
+      setAdminOrders([]);
     } finally {
       hideLoader();
     }
   };
+  const removeOrder = (id) => {
+    setAdminOrders((prevOrders) =>
+      prevOrders.filter((order) => order.order_id !== id)
+    );
+  };
 
   useEffect(() => {
-    fetchOrders( "pending")
-  }, [])
-  
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("token");
+    if (token) {
+      if (user && user.user_id && user.role === "user") {
+        fetchOrders("pending");
+      }
+
+      fetchAdminOrders("pending");
+    }
+  }, []);
+
   return (
     <OrdersContext.Provider
       value={{
@@ -55,6 +69,7 @@ export const OrdersProvider = ({ children }) => {
         orders,
         fetchAdminOrders,
         adminOrders,
+        removeOrder,
       }}
     >
       <div>

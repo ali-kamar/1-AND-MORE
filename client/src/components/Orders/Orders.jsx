@@ -65,7 +65,7 @@ const Orders = () => {
               </p>
               <p className="xs:text-sm md:text-xl text-primary font-semibold">
                 Status:{" "}
-                <span className="xs:text-sm md:text-sm text-black">
+                <span className="xs:text-sm md:text-base text-black">
                   {order.order_status}
                 </span>
               </p>

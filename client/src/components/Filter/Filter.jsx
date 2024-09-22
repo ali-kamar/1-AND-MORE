@@ -13,8 +13,6 @@ const Filter = () => {
   const [sort, setSort] = useState("");
   
   const handleSave = () => {
-    console.log("clicked");
-    
   fetchFilteredProducts({
     category: selectedCategory,
     minPrice,

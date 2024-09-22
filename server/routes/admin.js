@@ -13,13 +13,11 @@ const {
   addCategory,
   editCategory,
   deleteCategory,
-  getAllCategories,
 } = require("../controllers/category");
 
 const { getOrders, editOrder, deleteOrder } = require("../controllers/orders");
 
 router.route("/category/add-category").post(addCategory);
-router.route("/category/").get(getAllCategories);
 router.route("/category/:id").patch(editCategory).delete(deleteCategory);
 
 router.route("/product/").get(getAllProducts);

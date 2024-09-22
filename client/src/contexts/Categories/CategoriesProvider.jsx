@@ -15,7 +15,7 @@ export const CategoriesProvider = ({ children }) => {
   const fetchCategories = async () => {
     try {
         showLoader()
-      const response = await axios.get("admin/category");
+      const response = await axios.get("global/category");
       setCategories(response.data); // Set products
     } catch (err) {
       setError(err.response.data.msg);
