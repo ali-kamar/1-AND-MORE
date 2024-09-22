@@ -3,10 +3,12 @@ import { useOrder } from "../../contexts/Orders/OrdersProvider";
 import axios from "../../api/axios";
 import Notification from "../Notification/Notification";
 import { useNotification } from "../../contexts/Notification/NotificationProvider";
+import { useLoader } from "../../contexts/Loader/LoaderProvider";
 
 const AdminOrders = () => {
   const { isOpen, notification, showNotification } = useNotification();
   const { fetchAdminOrders, adminOrders } = useOrder();
+  const { showLoader, hideLoader } = useLoader();
   // State to track the currently selected status from the dropdown
   const [selectedStatus, setSelectedStatus] = useState("pending");
 
@@ -19,6 +21,7 @@ const AdminOrders = () => {
   const handleEditOrder = async (e, id) => {
     const newStatus = e.target.value;
     try {
+      showLoader()
       const { data } = await axios.patch(`admin/orders/${id}`, {
         status: newStatus,
       });
@@ -27,10 +30,12 @@ const AdminOrders = () => {
     } catch (error) {
       console.error(error);
     }
+    finally{hideLoader()}
   };
 
   const handleDelete = async (id) => {
     try {
+      showLoader()
       const { data } = await axios.delete(`admin/orders/${id}`);
       // After changing the status, re-fetch the orders based on the currently selected status
       fetchAdminOrders(selectedStatus);
@@ -38,6 +43,7 @@ const AdminOrders = () => {
     } catch (error) {
       console.error(error);
     }
+    finally{hideLoader()}
   }
   useEffect(() => {
     fetchAdminOrders(selectedStatus)

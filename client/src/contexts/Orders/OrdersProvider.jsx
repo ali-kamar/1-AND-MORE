@@ -44,12 +44,6 @@ export const OrdersProvider = ({ children }) => {
       hideLoader();
     }
   };
-  const removeOrder = (id) => {
-    setAdminOrders((prevOrders) =>
-      prevOrders.filter((order) => order.order_id !== id)
-    );
-  };
-
 
 
 
@@ -60,7 +54,6 @@ export const OrdersProvider = ({ children }) => {
         orders,
         fetchAdminOrders,
         adminOrders,
-        removeOrder,
         setAdminOrders,
       }}
     >
