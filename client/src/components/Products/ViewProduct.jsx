@@ -74,8 +74,8 @@ const ViewProduct = () => {
       }
       if (fetchProduct.data.offertype) {
         setDiscount(
-          fetchProduct.data.price -
-            fetchProduct.data.price * (fetchProduct.data.offertype / 100)
+          (fetchProduct.data.price -
+            fetchProduct.data.price * (fetchProduct.data.offertype / 100)).toFixed(2)
         );
         setIsOffer(true);
       }

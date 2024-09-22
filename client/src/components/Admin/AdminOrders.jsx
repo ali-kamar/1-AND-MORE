@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useOrder } from "../../contexts/Orders/OrdersProvider";
+import axios from "../../api/axios";
 
 const AdminOrders = () => {
-  const { fetchAdminOrders, adminOrders, removeOrder } = useOrder();
+  const { fetchAdminOrders, adminOrders } = useOrder();
+  // State to track the currently selected status from the dropdown
+  const [selectedStatus, setSelectedStatus] = useState("pending");
+
+  const handleChange = (e) => {
+    const newStatus = e.target.value;
+    setSelectedStatus(newStatus); // Update the selected status
+    fetchAdminOrders(newStatus); // Fetch orders based on the selected status
+  };
+
+  const handleEditOrder = async (e, id) => {
+    const newStatus = e.target.value;
+    try {
+      const { data } = await axios.patch(`admin/orders/${id}`, {
+        status: newStatus,
+      });
+      // After changing the status, re-fetch the orders based on the currently selected status
+      fetchAdminOrders(selectedStatus);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(`admin/orders/${id}`);
+      // After changing the status, re-fetch the orders based on the currently selected status
+      fetchAdminOrders(selectedStatus);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  useEffect(() => {
+    fetchAdminOrders(selectedStatus)
+  }, [])
+
   return (
     <div>
       <h2 className="text-4xl font-semibold text-center my-10">Orders</h2>
@@ -11,16 +47,17 @@ const AdminOrders = () => {
           <label htmlFor="list">Status: </label>
           <select
             name="list"
-            id=""
+            value={selectedStatus}
+            onChange={handleChange}
             className="border border-primary p-1 rounded"
           >
-            <option value="">Pending</option>
-            <option value="">Processing</option>
-            <option value="">Delivered</option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="delivered">Delivered</option>
           </select>
         </div>
       </div>
-      <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-6 mt-10 p-400">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-6 mt-10 p-4">
         {adminOrders.map((order) => (
           <div
             className="bg-white shadow rounded overflow-hidden p-4 border border-primary"
@@ -60,15 +97,21 @@ const AdminOrders = () => {
                   ${order.total}
                 </span>
               </p>
-              <label htmlFor="status">Status: </label>
+              <label
+                htmlFor="status"
+                className="xs:text-sm md:text-xl text-primary font-semibold"
+              >
+                Status:{" "}
+              </label>
               <select
                 name="status"
-                id=""
+                onChange={(e) => handleEditOrder(e, order.order_id)}
+                value={order.order_status}
                 className="border border-primary rounded"
               >
-                <option value="">Pending</option>
-                <option value="">Processing</option>
-                <option value="">Delivered</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="delivered">Delivered</option>
               </select>
             </div>
 
@@ -78,6 +121,11 @@ const AdminOrders = () => {
                   {details.quantity} {details.name} for ${details.total}
                 </p>
               ))}
+            </div>
+            <div className="flex justify-center mt-2 w-full">
+              <button className="border border-black bg-primary text-white rounded p-1 w-full"
+              onClick={() => handleDelete(order.order_id)}
+              >Delete</button>
             </div>
           </div>
         ))}

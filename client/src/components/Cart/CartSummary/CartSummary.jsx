@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useProduct } from "../../../contexts/Product/ProductProvider";
 import axios from "../../../api/axios";
-import Notification from "../../Notification/Notification"
+import Notification from "../../Notification/Notification";
 import { useNotification } from "../../../contexts/Notification/NotificationProvider";
 
 const CartSummary = ({ closeCheckout }) => {
@@ -73,21 +73,26 @@ const CartSummary = ({ closeCheckout }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user"));
+    if (user.cart.length === 0) {
+      showNotification("cart is empty", "error");
+      return;
+    }
     let user_id = user.user_id;
     try {
       const { data } = await axios.post("user/orders/add-order", {
         user_id,
-        data:formData,
-        total:priceTotal,
+        data: formData,
+        total: priceTotal,
         address,
         name,
         phone,
       });
-      if(data){
+      if (data) {
         closeCheckout();
         showNotification("Order added successfully!", "success");
+        user.cart = [];
+        localStorage.setItem("user", JSON.stringify(user));
       }
-      
     } catch (error) {
       showNotification(error.response.data.msg, "error");
     }

@@ -50,17 +50,8 @@ export const OrdersProvider = ({ children }) => {
     );
   };
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = localStorage.getItem("token");
-    if (token) {
-      if (user && user.user_id && user.role === "user") {
-        fetchOrders("pending");
-      }
 
-      fetchAdminOrders("pending");
-    }
-  }, []);
+
 
   return (
     <OrdersContext.Provider
@@ -70,6 +61,7 @@ export const OrdersProvider = ({ children }) => {
         fetchAdminOrders,
         adminOrders,
         removeOrder,
+        setAdminOrders,
       }}
     >
       <div>
