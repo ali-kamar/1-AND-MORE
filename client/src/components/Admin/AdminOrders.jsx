@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useOrder } from "../../contexts/Orders/OrdersProvider";
 import axios from "../../api/axios";
+import Notification from "../Notification/Notification";
+import { useNotification } from "../../contexts/Notification/NotificationProvider";
 
 const AdminOrders = () => {
+  const { isOpen, notification, showNotification } = useNotification();
   const { fetchAdminOrders, adminOrders } = useOrder();
   // State to track the currently selected status from the dropdown
   const [selectedStatus, setSelectedStatus] = useState("pending");
@@ -31,6 +34,7 @@ const AdminOrders = () => {
       const { data } = await axios.delete(`admin/orders/${id}`);
       // After changing the status, re-fetch the orders based on the currently selected status
       fetchAdminOrders(selectedStatus);
+      showNotification("Order deleted successfully", "success")
     } catch (error) {
       console.error(error);
     }
@@ -123,13 +127,19 @@ const AdminOrders = () => {
               ))}
             </div>
             <div className="flex justify-center mt-2 w-full">
-              <button className="border border-black bg-primary text-white rounded p-1 w-full"
-              onClick={() => handleDelete(order.order_id)}
-              >Delete</button>
+              <button
+                className="border border-black bg-primary text-white rounded p-1 w-full"
+                onClick={() => handleDelete(order.order_id)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}
       </div>
+      {isOpen && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
     </div>
   );
 };

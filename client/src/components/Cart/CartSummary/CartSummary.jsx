@@ -15,8 +15,7 @@ const CartSummary = ({ closeCheckout }) => {
   const { isOpen, notification, showNotification } = useNotification();
 
   useEffect(() => {
-    const data = []; // Move data initialization inside the useEffect to reset it each time
-
+    const data = [];
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (user && user.cart) {
@@ -27,7 +26,7 @@ const CartSummary = ({ closeCheckout }) => {
       const cartProductsIds = cartProductsData.map((item) => item.id);
       const initialQuantities = {};
       cartProductsData.forEach((item) => {
-        initialQuantities[item.id] = item.quantity; // Initialize quantities from localStorage
+        initialQuantities[item.id] = item.quantity;
       });
 
       // Filter products that are in the user's cart
@@ -74,7 +73,7 @@ const CartSummary = ({ closeCheckout }) => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user"));
     if (user.cart.length === 0) {
-      showNotification("cart is empty", "error");
+      showNotification("Cart is empty", "error");
       return;
     }
     let user_id = user.user_id;
@@ -88,10 +87,17 @@ const CartSummary = ({ closeCheckout }) => {
         phone,
       });
       if (data) {
+        // Clear the cart and update localStorage
+        const updatedUser = { ...user, cart: [] };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        // Update state to reflect the cleared cart
+        setItemsTotal(0);
+        setPriceTotal(0);
+        setFormData([]); // Clear form data
+
         closeCheckout();
         showNotification("Order added successfully!", "success");
-        user.cart = [];
-        localStorage.setItem("user", JSON.stringify(user));
       }
     } catch (error) {
       showNotification(error.response.data.msg, "error");
