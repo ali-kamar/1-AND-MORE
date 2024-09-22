@@ -69,68 +69,71 @@ const AdminOrders = () => {
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-6 mt-10 p-4">
         {adminOrders.map((order) => (
           <div
-            className="bg-white shadow rounded overflow-hidden p-4 border border-primary"
+            className="bg-white shadow rounded overflow-hidden p-4 border border-primary flex flex-col justify-between h-full"
             key={order.order_id}
           >
-            <h4 className="uppercase font-medium xs:text-base md:text-xl mb-2 text-gray-800 ">
-              Order ID:{" "}
-              <span className="xs:text-xs md:text-sm">{order.order_id}</span>
-            </h4>
-
-            <h4 className="uppercase font-medium xs:text-base md:text-xl mb-2 text-gray-800 ">
-              Order Data
-            </h4>
-
-            <div className="mb-1">
-              <p className="xs:text-sm md:text-xl text-primary font-semibold">
-                Name:{" "}
-                <span className="xs:text-sm md:text-base text-black">
-                  {order.name}
-                </span>
-              </p>
-              <p className="xs:text-sm md:text-xl text-primary font-semibold">
-                Phone:{" "}
-                <span className="xs:text-sm md:text-base text-black">
-                  {order.phone}
-                </span>
-              </p>
-              <p className="xs:text-sm md:text-xl text-primary font-semibold">
-                Address:{" "}
-                <span className="xs:text-sm md:text-base text-black">
-                  {order.address}
-                </span>
-              </p>
-              <p className="xs:text-sm md:text-xl text-primary font-semibold">
-                Total:{" "}
-                <span className="xs:text-sm md:text-base text-black">
-                  ${order.total}
-                </span>
-              </p>
-              <label
-                htmlFor="status"
-                className="xs:text-sm md:text-xl text-primary font-semibold"
-              >
-                Status:{" "}
-              </label>
-              <select
-                name="status"
-                onChange={(e) => handleEditOrder(e, order.order_id)}
-                value={order.order_status}
-                className="border border-primary rounded"
-              >
-                <option value="pending">Pending</option>
-                <option value="processing">Processing</option>
-                <option value="delivered">Delivered</option>
-              </select>
-            </div>
-
             <div>
-              {order.data.map((details, index) => (
-                <p key={index}>
-                  {details.quantity} {details.name} for ${details.total}
+              <h4 className="uppercase font-medium xs:text-base md:text-xl mb-2 text-gray-800 ">
+                Order ID:{" "}
+                <span className="xs:text-xs md:text-sm">{order.order_id}</span>
+              </h4>
+
+              <h4 className="uppercase font-medium xs:text-base md:text-xl mb-2 text-gray-800 ">
+                Order Data
+              </h4>
+
+              <div className="mb-1">
+                <p className="xs:text-sm md:text-xl text-primary font-semibold">
+                  Name:{" "}
+                  <span className="xs:text-sm md:text-base text-black">
+                    {order.name}
+                  </span>
                 </p>
-              ))}
+                <p className="xs:text-sm md:text-xl text-primary font-semibold">
+                  Phone:{" "}
+                  <span className="xs:text-sm md:text-base text-black">
+                    {order.phone}
+                  </span>
+                </p>
+                <p className="xs:text-sm md:text-xl text-primary font-semibold">
+                  Address:{" "}
+                  <span className="xs:text-sm md:text-base text-black">
+                    {order.address}
+                  </span>
+                </p>
+                <p className="xs:text-sm md:text-xl text-primary font-semibold">
+                  Total:{" "}
+                  <span className="xs:text-sm md:text-base text-black">
+                    ${order.total}
+                  </span>
+                </p>
+                <label
+                  htmlFor="status"
+                  className="xs:text-sm md:text-xl text-primary font-semibold"
+                >
+                  Status:{" "}
+                </label>
+                <select
+                  name="status"
+                  onChange={(e) => handleEditOrder(e, order.order_id)}
+                  value={order.order_status}
+                  className="border border-primary rounded"
+                >
+                  <option value="pending">Pending</option>
+                  <option value="processing">Processing</option>
+                  <option value="delivered">Delivered</option>
+                </select>
+              </div>
+
+              <div>
+                {order.data.map((details, index) => (
+                  <p key={index}>
+                    {details.quantity} {details.name} for ${details.total}
+                  </p>
+                ))}
+              </div>
             </div>
+
             <div className="flex justify-center mt-2 w-full">
               <button
                 className="border border-black bg-primary text-white rounded p-1 w-full"
