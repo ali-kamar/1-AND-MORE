@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useOrder } from "../../contexts/Orders/OrdersProvider";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
+  const navigate = useNavigate();
   const { fetchOrders, orders } = useOrder();
   const [selectedStatus, setSelectedStatus] = useState("pending");
 
@@ -12,6 +14,9 @@ const Orders = () => {
   };
 
   useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
     const user = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
     if (token && user) fetchOrders(selectedStatus);
