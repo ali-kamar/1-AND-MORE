@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(
   cors({
-    origin: "https://1-and-more-9rcrticej-alis-projects-53e71da3.vercel.app",
+    origin: "https://1-and-more.vercel.app/",
     credentials: true,
   })
 );
