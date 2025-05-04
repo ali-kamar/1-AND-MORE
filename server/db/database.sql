@@ -1,7 +1,8 @@
 CREATE DATABASE shop;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE users (
-    user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_name VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) UNIQUE NOT NULL,
     user_password VARCHAR(255) NOT NULL,
@@ -9,7 +10,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE Products (
-    product_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    product_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
@@ -20,13 +21,12 @@ CREATE TABLE Products (
 );
 
 CREATE TABLE Categories (
-    category_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    category_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     category_name VARCHAR(255) NOT NULL UNIQUE
 );
 
-
 CREATE TABLE orders (
-    order_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    order_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     data JSONB NOT NULL,
     order_status VARCHAR(50) NOT NULL DEFAULT 'pending',
