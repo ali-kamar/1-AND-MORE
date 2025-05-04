@@ -32,7 +32,13 @@ app.use(
 );
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://1-and-more.vercel.app/",
+    credentials: true,
+  })
+);
+
 app.use(xss());
 // routes
 app.use("/api/v1/auth", authenticationRouter);
