@@ -19,7 +19,9 @@ const authenticate = require("./middleware/authentication");
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
-
+ const corsOptions = {
+   origin: "https://1-and-more.vercel.app", // Set the allowed origin
+ };
 app.use(express.json());
 
 // extra packages
@@ -32,7 +34,7 @@ app.use(
 );
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(xss());
 // routes
 app.use("/api/v1/auth", authenticationRouter);
