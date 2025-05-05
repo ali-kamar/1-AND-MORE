@@ -19,9 +19,15 @@ const authenticate = require("./middleware/authentication");
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
- const corsOptions = {
-   origin: "https://1-and-more.vercel.app", // Set the allowed origin
- };
+const corsOptions = {
+  origin: "https://1-and-more.vercel.app", // Allow Vercel's domain
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+};
+
+// Use CORS middleware
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // extra packages

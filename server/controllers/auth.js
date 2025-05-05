@@ -30,7 +30,7 @@ const register = async (req, res) => {
   const bcryptPassword = await bcrypt.hash(password, salt);
 
   const newUser = await pool.query(
-    "INSERT INTO users (user_name,user_email,user_password,user_role) VALUES ($1,$2,$3,4$) RETURNING *",
+    "INSERT INTO users (user_name,user_email,user_password,user_role) VALUES ($1,$2,$3,$4) RETURNING *",
     [name, email, bcryptPassword,role]
   );
 
