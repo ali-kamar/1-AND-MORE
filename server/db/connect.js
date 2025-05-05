@@ -8,4 +8,14 @@ const pool = new Pool({
   },
 });
 
+// Test the connection and log the result
+pool
+  .query("SELECT NOW()")
+  .then(() => {
+    console.log("✅ Connected to PostgreSQL");
+  })
+  .catch((err) => {
+    console.error("❌ Failed to connect to PostgreSQL:", err.message);
+  });
+
 module.exports = pool;
