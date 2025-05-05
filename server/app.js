@@ -32,24 +32,7 @@ app.use(
 );
 app.use(express.json());
 app.use(helmet());
-const allowedOrigins = [
-  "https://1-and-more.vercel.app",
-  "https://1-and-more-git-main-alis-projects-53e71da3.vercel.app/",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
-
+app.use(cors());
 app.use(xss());
 // routes
 app.use("/api/v1/auth", authenticationRouter);
