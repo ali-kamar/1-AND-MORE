@@ -13,7 +13,7 @@ const AddCategory = () => {
   const handleAdd = async () => {
     try {
       if (!newCategory) {
-        showNotification("Please enter a category name", "error");}
+      return showNotification("Please enter a category name", "error");}
       const { data } = await axios.post("admin/category/add-category", {
         categoryName: newCategory,
       });
