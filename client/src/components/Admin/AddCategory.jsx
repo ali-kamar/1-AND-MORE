@@ -12,6 +12,8 @@ const AddCategory = () => {
 
   const handleAdd = async () => {
     try {
+      if (!newCategory) {
+        showNotification("Please enter a category name", "error");}
       const { data } = await axios.post("admin/category/add-category", {
         categoryName: newCategory,
       });
@@ -51,6 +53,7 @@ const AddCategory = () => {
             id="add"
             className="w-full border border-primary rounded-none p-3 focus:outline-none"
             placeholder="Add category..."
+            required
           />
           <button
             className="bg-primary items-center border border-primary text-white xs:px-4 lg:px-8 hover:bg-transparent hover:text-primary transition"

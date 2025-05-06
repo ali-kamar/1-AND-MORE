@@ -37,7 +37,7 @@ const ViewProduct = () => {
         showNotification("Product is already in the cart!", "error");
       }
     } else {
-      showNotification("No user found!", "error");
+      showNotification("Please login first!", "warning");
     }
   };
 
@@ -59,7 +59,7 @@ const ViewProduct = () => {
         showNotification("Product is already in the wishlist!", "error");
       }
     } else {
-      showNotification("No user found!", "error");
+      showNotification("Please login first!", "warning");
     }
   };
 
