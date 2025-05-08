@@ -19,7 +19,6 @@ const authorize = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error(error.message);
     return res.status(StatusCodes.FORBIDDEN).json("Not Authorize");
   }
 };
