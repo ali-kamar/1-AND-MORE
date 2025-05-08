@@ -36,8 +36,8 @@ cd client && npm install
 cd server && npm install
 ```
 ### Create a .env file in the server folder:
-DATABASE_URL=your_postgresql_connection_string
-JWT_SECRET=your_jwt_secret
+-DATABASE_URL=your_postgresql_connection_string
+-JWT_SECRET=your_jwt_secret
 
 ### Run the app
 npm run dev
