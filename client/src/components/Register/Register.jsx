@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import axios from "../../api/axios"; // Adjust the path as needed
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../contexts/Notification/NotificationProvider";
 import Notification from "../Notification/Notification";
 
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {  
+    case "UPDATE_FIELD":
+      return {
+        ...state,
+        [action.field]: action.value
+      };
+    case "RESET":
+      return initialState;
+    default:
+      return state;
+    }
+  }
+
+
 const Register = () => {
   const navigate = useNavigate();
   const { isOpen, notification, showNotification } = useNotification();
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { name, email, password, confirmPassword } = state;
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +82,7 @@ const Register = () => {
                 type="text"
                 name="name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => dispatch({ type: "UPDATE_FIELD", field: "name", value: e.target.value })}
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                 placeholder="fulan fulana"
                 required
@@ -76,7 +96,7 @@ const Register = () => {
                 type="email"
                 name="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => dispatch({ type: "UPDATE_FIELD", field: "email", value: e.target.value })}
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                 placeholder="youremail@domain.com"
                 required
@@ -90,7 +110,7 @@ const Register = () => {
                 type="password"
                 name="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => dispatch({ type: "UPDATE_FIELD", field: "password", value: e.target.value })}
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                 placeholder="*******"
                 required
@@ -104,7 +124,7 @@ const Register = () => {
                 type="password"
                 name="confirm"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => dispatch({ type: "UPDATE_FIELD", field: "confirmPassword", value: e.target.value })}
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                 placeholder="*******"
                 required

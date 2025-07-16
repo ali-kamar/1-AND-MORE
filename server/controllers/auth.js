@@ -30,11 +30,11 @@ const register = async (req, res) => {
   const bcryptPassword = await bcrypt.hash(password, salt);
 
   const newUser = await pool.query(
-    "INSERT INTO users (user_name,user_email,user_password,user_role) VALUES ($1,$2,$3) RETURNING *",
+    "INSERT INTO users (user_name,user_email,user_password) VALUES ($1,$2,$3) RETURNING *",
     [name, email, bcryptPassword]
-  );
+  );  
 
-  const token = jwtGenerator(newUser.rows[0].user_id);
+  const token = jwtGenerator(newUser.rows[0].user_id);  
 
   res.status(StatusCodes.CREATED).json({
     token,

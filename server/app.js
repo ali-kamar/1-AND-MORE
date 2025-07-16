@@ -21,6 +21,7 @@ const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const corsOptions = {
   origin: "https://1-and-more.vercel.app", // Allow Vercel's domain
+  // origin: "http://localhost:3000", // Allow Vercel's domain
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Allowed methods
   allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
 };

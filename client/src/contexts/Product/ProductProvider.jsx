@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext, useCallback } from "react";
 import axios from "../../api/axios"; 
 import { useLoader } from "../Loader/LoaderProvider";
 // Create the context
@@ -11,7 +11,8 @@ export const ProductProvider = ({ children }) => {
   const { showLoader, hideLoader } = useLoader();
 
   // Fetch products from the API
-  const fetchProducts = async () => {
+  // the use callback hook is used to memoize the function so that it does not change on every render
+  const fetchProducts = useCallback(async () => {
     try {
       showLoader()
       const response = await axios.get("global/product");
@@ -21,7 +22,7 @@ export const ProductProvider = ({ children }) => {
     } finally {
       hideLoader()
     }
-  };
+  },[]);
 
    const fetchFilteredProducts = async ({
      category,
